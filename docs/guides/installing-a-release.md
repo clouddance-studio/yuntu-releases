@@ -2,6 +2,8 @@
 
 **Preparation status:** no public installer or Microsoft Store link is provided yet. Final system requirements and package-specific instructions will be confirmed against the accepted release. The website is not yet available as a public installation or support endpoint.
 
+This release is fixed at **1.0.0-beta**, channel **beta**, Windows file version **1.0.0.0**. An installer filename, an older internal beta, or the MCP bridge's component version is not a substitute for that accepted application identity.
+
 ## Choose the correct download
 
 The planned primary channel is Microsoft Store, using a Windows x64 MSIX package. When a verified listing is available, check the product name, publisher, architecture, supported Windows version, and release channel before installing.
@@ -15,7 +17,7 @@ A GitHub Release's automatically generated **Source code** ZIP or tarball contai
 Use the checksum published for that exact file. For example, after replacing the filename with your download:
 
 ```powershell
-Get-FileHash -LiteralPath '.\Yuntu-Editor-<version>-windows-x64-setup.exe' -Algorithm SHA256
+Get-FileHash -LiteralPath '.\Yuntu-Editor-1.0.0-beta-windows-x64-setup.exe' -Algorithm SHA256
 ```
 
 Compare the entire result with the release's SHA-256 record. A mismatch means the file is not the one described by that record. A matching checksum checks bytes; it does not by itself authenticate a publisher.
@@ -23,7 +25,7 @@ Compare the entire result with the release's SHA-256 record. A mismatch means th
 For a separately distributed EXE, you can inspect its signature:
 
 ```powershell
-Get-AuthenticodeSignature -LiteralPath '.\Yuntu-Editor-<version>-windows-x64-setup.exe'
+Get-AuthenticodeSignature -LiteralPath '.\Yuntu-Editor-1.0.0-beta-windows-x64-setup.exe'
 ```
 
 The accepted release instructions must identify the expected publisher and signing state. Do not bypass a Windows security warning just to complete these instructions. Store MSIX installation follows the Store's package validation workflow instead of this EXE example.

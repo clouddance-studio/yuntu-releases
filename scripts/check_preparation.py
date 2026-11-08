@@ -1,12 +1,12 @@
 """Read-only release-material checks. Requires Python 3.11+; never publishes."""
 import argparse
-import hashlib
 import json
 import re
 import sys
 import tomllib
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
+from release_checks import FIXED_TARGET, validate_assets, validate_connector, validate_listing_facts
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_GATES = {
@@ -26,12 +26,17 @@ def inside(root, name):
 
 def validate_readiness(record, require_ready=False):
     errors, pending, seen = [], [], set()
+    if not isinstance(record, dict):
+        return ["Readiness record must be an object"], []
     if record.get("format") != "yuntu-release-readiness/1":
         errors.append("Unsupported readiness format")
+    if record.get("primaryChannel") != "microsoft-store-msix":
+        errors.append("Missing or unsupported release channel; this preparation uses Microsoft Store MSIX")
     target = record.get("releaseTarget", {})
-    if not all(isinstance(target.get(key), str) and target[key] for key in ("version", "channel", "windowsFileVersion")):
-        errors.append("Missing user-fixed release target")
-    elif record.get("branch") != "release/" + target["version"]:
+    if not isinstance(target, dict) or any(target.get(key) != value for key, value in FIXED_TARGET.items()):
+        errors.append("Release target must remain 1.0.0-beta / beta / 1.0.0.0 as fixed by the user")
+    target = FIXED_TARGET
+    if record.get("branch") != "release/" + target["version"]:
         errors.append("Release branch does not match the user-fixed version")
     if isinstance(record.get("finalIdentity"), dict):
         errors.extend(identity_mismatches(record["finalIdentity"], target, "Final build identity"))
@@ -101,12 +106,7 @@ def check(root=ROOT, require_ready=False, editor_identity=None):
             if not target.is_relative_to(root.resolve()) or not target.exists():
                 errors.append("Missing local link in " + str(relative) + ": " + match[1])
     provenance = json.loads((root / "integrations/mcp/source-provenance.json").read_text(encoding="utf8"))
-    if not re.fullmatch(r"[0-9a-f]{40}", provenance.get("sourceCommit", "")):
-        errors.append("Missing connector source commit")
-    for name, identity in provenance["files"].items():
-        data = inside(root, "integrations/mcp/" + name).read_bytes()
-        if len(data) != identity["bytes"] or hashlib.sha256(data).hexdigest() != identity["sha256"]:
-            errors.append("Connector snapshot changed without provenance: " + name)
+    errors.extend(validate_connector(root, provenance))
     setup = (root / "docs/guides/ai-mcp.md").read_text(encoding="utf8")
     for block in re.findall(r"```toml\n(.*?)\n```", setup, flags=re.S):
         config = tomllib.loads(block)
@@ -114,6 +114,7 @@ def check(root=ROOT, require_ready=False, editor_identity=None):
         if server["args"][0] != "-B" or "--info" not in server["args"]:
             errors.append("MCP configuration does not select a private discovery path")
     listing = json.loads((root / "docs/release/store-listing.en.json").read_text(encoding="utf8"))
+    errors.extend(validate_listing_facts(listing.get("requiredFacts"), require_ready))
     if listing["locale"] != "en-US" or listing["status"] not in {"draft-not-for-submission", "approved-for-submission"}:
         errors.append("Unexpected Store copy locale or preparation state")
     # Editorial budgets, not an assertion about every Store submission field.
@@ -124,24 +125,8 @@ def check(root=ROOT, require_ready=False, editor_identity=None):
     if require_ready:
         if listing["status"] != "approved-for-submission":
             errors.append("Store listing draft has not been approved")
-        if any(value is None or value == "" for value in listing["requiredFacts"].values()):
-            errors.append("Final listing facts are incomplete")
-        for asset in record.get("approvedAssets", []):
-            name = asset["path"]
-            prefix = "releases/" + record["releaseTarget"]["version"] + "/windows-x64/"
-            if not name.startswith(prefix):
-                errors.append("Final artifact is outside the fixed version archive: " + name)
-                continue
-            file = inside(root, name)
-            if not file.is_file():
-                errors.append("Final artifact not found: " + name)
-                continue
-            digest = hashlib.sha256()
-            with file.open("rb") as stream:
-                for chunk in iter(lambda: stream.read(1024 * 1024), b""):
-                    digest.update(chunk)
-            if file.stat().st_size != asset["bytes"] or digest.hexdigest() != asset["sha256"]:
-                errors.append("Final artifact checksum mismatch: " + name)
+        if record.get("approvedAssets"):
+            errors.extend(validate_assets(root, record["approvedAssets"], FIXED_TARGET["version"], record.get("primaryChannel")))
     return errors, pending
 
 

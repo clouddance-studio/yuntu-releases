@@ -20,3 +20,4 @@ The website domain is still under review, and no public download, Store listing,
 - [Release preparation entry](release/README.md): review order, local checks, and artifact handoff.
 - [Final launch handoff (Chinese)](release/launch-handoff.md): acceptance inputs, MSIX channel, domain hold, and publication boundaries.
 - [Repository boundaries (Chinese)](release/repository-boundaries.md): existing repository responsibilities and optional future splits.
+- [Release-branch review (Chinese)](release/review-2026-11-08.md): findings, local fixes, verification, and remaining acceptance limits.

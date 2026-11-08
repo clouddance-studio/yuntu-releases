@@ -19,6 +19,10 @@ class ReadinessTests(unittest.TestCase):
         self.record["gates"] = [g for g in self.record["gates"] if g["id"] != "editor-acceptance"]
         self.assertTrue(any("Missing release gates" in error for error in validate_readiness(self.record)[0]))
 
+    def test_removing_the_channel_cannot_disable_msix_package_checks(self):
+        del self.record["primaryChannel"]
+        self.assertTrue(any("unsupported release channel" in error for error in validate_readiness(self.record)[0]))
+
     def test_ready_without_evidence_is_invalid(self):
         self.record["gates"][0]["status"] = "ready"
         self.assertTrue(any("actual evidence" in error for error in validate_readiness(self.record)[0]))
@@ -45,6 +49,12 @@ class ReadinessTests(unittest.TestCase):
         self.assertEqual(identity_mismatches(dict(target), target, "Editor"), [])
         wrong = dict(target, version="1.0.0")
         self.assertTrue(identity_mismatches(wrong, target, "Editor"))
+
+    def test_retargeting_the_record_and_branch_together_still_cannot_change_the_user_version(self):
+        self.record["releaseTarget"].update(version="1.0.0-beta.3", windowsFileVersion="1.0.0.3")
+        self.record["branch"] = "release/1.0.0-beta.3"
+        errors, _ = validate_readiness(self.record)
+        self.assertTrue(any("must remain 1.0.0-beta" in error for error in errors))
 
 
 if __name__ == "__main__":

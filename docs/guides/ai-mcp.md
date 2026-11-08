@@ -44,6 +44,8 @@ args = ['-B', 'C:\Path\To\yuntu-releases\integrations\mcp\editor-mcp.py', '--inf
 
 Use your actual Python executable, the complete bridge location, and the discovery file created above. Restart or reload the MCP connection using the client's supported workflow. Configuration and transport details are documented in [the official MCP guide](https://learn.chatgpt.com/docs/extend/mcp?surface=cli).
 
+In Codex, the user configuration is normally `~/.codex/config.toml`; a trusted project can use `.codex/config.toml`. Use the scope appropriate to your setup, preserve other entries, and replace every example path before enabling the server. The bridge reads its discovery credential at startup, so changing the editor process requires restarting the bridge, not just repeating a tool call.
+
 For a different client, use its own stdio MCP configuration format. A JSON `mcpServers` example is not interchangeable with Codex TOML. Do not turn off the client's tool permissions to make the connection work.
 
 ## Install the user Skill
@@ -60,13 +62,35 @@ This does not change your client configuration automatically, connect the editor
 4. Confirm the correct project and page, then request one small reversible edit.
 5. Check the editor result, save status, and supported undo before continuing with a larger task.
 
-Example request: "Use the Yuntu Editor skill. Inspect the active project first. On my settings page, align the Theme label with its field while keeping the current text. Validate and preview the result."
+Example request: "Use the Yuntu Editor skill. Inspect the active project first. On my settings page, align the Theme label with its field while keeping the current text. Re-read the result and tell me which checks you performed and which need the editor GUI."
 
 Every write requires the current `expectedSessionId`, a unique external `requestId`, and the underlying operation's real revision, plan, owner, hash, or idempotency parameters. The client must not invent IDs or automatically retry an ambiguous write. Accepted background work must reach a matching successful terminal result before it is reported as complete.
 
+## Current bridge coverage
+
+The editor's native API and the MCP bridge have separate allowlists. A method must be in both the editor's capabilities and the MCP tool schema before the client can call it.
+
+| Workflow | This bundled bridge |
+| --- | --- |
+| Inspect project, document, capabilities, and supported canvas state | Available through the corresponding `editor_read` methods when the installed editor supports them. |
+| Plan/apply a page edit, inspect saved operation receipts, use supported history and review | Available through the allowlisted methods with their actual session and author guards. |
+| Native `document.validate` | Not exposed by this bundle; do not invent a call or claim the native validation ran. |
+| Pure artwork `preview.snapshot` / `preview.render` | Not exposed by this bundle. Canvas state/snapshots are a different surface. Use the editor's available GUI preview for visual inspection. |
+| Standard JSON `project.export.*` | Not exposed by this bundle. Use the intended project's Export GUI. `codegen.export` is not a replacement for standard JSON export. |
+
+The current integration is usable for its stated subset; complete MCP-driven validate/render/standard-export automation is not delivered here. Record this limit during final acceptance rather than bypassing the bridge. The bridge's own `serverInfo.version` is a component identifier, not the Yuntu Editor product version. This release's accepted application must identify as `1.0.0-beta`; an old installed beta cannot be relabeled as the accepted release.
+
 ## Restart and connection failures
 
-If the editor restarts or another document session becomes active, refresh the connection and re-read the target before writing. Keep the discovery path bound to the intended process; do not point the client at an arbitrary file found by name.
+If you only switch documents within the same editor process, re-read capabilities and the target author before writing. If the editor process restarts, use this full reconnection sequence:
+
+1. Finish or preserve current work and close the intended editor normally. Stop the corresponding MCP connection in the client; do not terminate an unrelated editor process.
+2. Start the editor with a new discovery filename using the launch example above, then open the intended project.
+3. Update only the `--info` argument in that server's client configuration to the newly created discovery path. The UUID-based launch example produces a different path each time.
+4. Restart the client-side MCP server so it loads the new process's credential. A tool retry alone keeps the old bridge credential and cannot reconnect it.
+5. Read capabilities, verify the release identity and current project/document/session, and reassess the pending task before any new write.
+
+Do not point the client at an arbitrary discovery file found by name, automatically replay a write that timed out, or copy the credential into configuration. A transport error after restart differs from a document-session change within a running process.
 
 - A missing sibling helper means the bridge folder was copied incompletely.
 - A missing discovery file means the editor has not created that selected connection file, or the client has the wrong path.

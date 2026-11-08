@@ -16,6 +16,7 @@ Start with these materials:
 6. [Repository boundaries](repository-boundaries.md): why no additional Git repository is required now.
 7. [Readiness data](readiness.json): pending gates remain explicit; documentation checks do not clear them.
 8. [Local preparation verification](preparation-verification.md): completed checks and their limits.
+9. [Full branch review](review-2026-11-08.md): corrected Skill/MCP scope, restart instructions, version locking, and file checks.
 
 ## Local checks
 
@@ -23,7 +24,7 @@ From the repository root, with Python 3.11+ available for the preparation checke
 
 ```powershell
 python -B scripts/check_preparation.py
-python -B -m unittest discover -s scripts -p 'test_preparation.py'
+python -B -m unittest discover -s scripts -p 'test_*.py'
 python -B integrations/mcp/test-editor-mcp.py
 ```
 
@@ -34,6 +35,8 @@ python -B scripts/check_preparation.py --require-ready --editor-identity '..\rus
 ```
 
 This must fail while any release gate remains pending. None of these commands builds the editor, modifies a running editor, copies a final package, changes client configuration, or publishes anything.
+
+The script tests include a real stdio subprocess connected only to a synthetic loopback API server. They do not connect to a native editor or prove final installed-client compatibility. Artifact fixtures contain synthetic bytes in temporary test directories; a checksum or file extension is not Store package certification. Required Store facts cannot be dropped from the record, and final assets must remain inside the exact `1.0.0-beta/windows-x64` archive with matching hashes and an MSIX submission package for the selected route.
 
 ## Artifact handoff
 

@@ -15,8 +15,10 @@
 - `docs/release/`：发布内容准备、流程和记录；准备方案不等于对外承诺。
 - `docs/guides/`：英文安装／Release 使用、上手、FAQ、支持和 Skill／MCP 接入说明；未经验证的域名和邮箱不作为可用入口。
 - `integrations/skills/yuntu-editor/`：面向用户作品创作的英文 Skill，不是内部源码开发 Skill。
+- Skill 可调用范围是 MCP 工具 Schema 与编辑器 capabilities 的交集。当前桥接未开放 `document.validate`、纯作品 `preview.*` 或 `project.export.*`；对应 GUI 操作必须明示，不能用原生 API 清单冒充 MCP 能力，也不能用 `codegen.export` 代替标准 JSON。
 - `integrations/mcp/`：外部连接器及协议测试的明确 Git 来源快照；`source-provenance.json` 核对提交、原始字节及摘要。两个运行脚本保持同目录，不依赖私有编辑器源码路径。最终安装版与客户端兼容仍须单独验证。
 - `scripts/check_preparation.py`：Python 3.11+ 只读准备检查；`--require-ready` 会在发布门禁未完成时拒绝通过。检查通过不授权构建或发布。
+- `scripts/release_checks.py`：固定版本、完整连接器清单、Store 必填事实及归档路径／摘要核对。`python -B -m unittest discover -s scripts -p 'test_*.py'` 验证准备逻辑、文件边界和 stdio 交付；stdio 测试仅连接合成 loopback 服务，不接触正在验收的编辑器。
 - `releases/<产品版本>/<平台-架构>/`：本地最终发布产物，实际发布时创建。例如 `releases/1.0.0-beta/windows-x64/`，版本必须取本次发行真源，不能固定沿用示例。
 - 后续按实际材料增加用户指南、截图、可编辑示例和生成器教程，不预建空内容冒充交付。
 - 安装包若启用 GitHub 备用分发，作为 Releases 附件管理，不放进 Git 历史。

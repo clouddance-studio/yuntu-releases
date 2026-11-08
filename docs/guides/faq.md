@@ -24,7 +24,7 @@ Production account services, subscriptions, cloud project storage, and hosted te
 
 ## Does JSON export generate my whole application?
 
-Standard JSON is a versioned UI handoff. The installer includes official Web, WeChat Mini Program, Android, and iOS exporter packages; support varies by format, content, and target. The optional Web exporter produces React / TypeScript for a supported subset. Application data, services, business logic, deployment, and target-specific validation still belong in your development workflow.
+Standard JSON is a versioned UI handoff. The installer includes official Web, WeChat Mini Program, Android, and iOS exporter packages; support varies by format, content, and target. Package inclusion does not establish end-to-end validation of generated output on Android, iOS, or other target platforms. The optional Web exporter produces React / TypeScript for a supported subset. Application data, services, business logic, deployment, and target-specific validation still belong in your development workflow.
 
 ## Are history and recovery a backup?
 

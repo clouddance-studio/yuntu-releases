@@ -1,6 +1,6 @@
 # Set up the Yuntu Editor Skill and MCP connection
 
-The [1.0.0-beta GitHub release](https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta) provides separate MCP 0.2.0 and user Skill ZIP assets; no package-manager or plugin-store listing is provided. Final compatibility with the accepted installed editor remains a release gate. The website domain is still under review; setup does not depend on it.
+The [1.0.0-beta GitHub release](https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta) provides separate MCP 0.2.0 and user Skill ZIP assets; no package-manager or plugin-store listing is provided. End-to-end compatibility with external AI clients and models has not yet been fully verified. The website domain is still under review; setup does not depend on it.
 
 ## What each component does
 

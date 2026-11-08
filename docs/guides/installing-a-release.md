@@ -28,7 +28,7 @@ For a separately distributed EXE, you can inspect its signature:
 Get-AuthenticodeSignature -LiteralPath '.\Yuntu-Editor-1.0.0-beta-windows-x64-setup.exe'
 ```
 
-The accepted release instructions must identify the expected publisher and signing state. Do not bypass a Windows security warning just to complete these instructions. Store MSIX installation follows the Store's package validation workflow instead of this EXE example.
+The 1.0.0-beta EXE is not Authenticode signed and has no Authenticode-verified publisher identity. The signature check should report `NotSigned`. A matching SHA-256 checksum verifies the file bytes, not the publisher. Follow your normal Windows security policy. A future Store MSIX release will use the Store's package validation workflow.
 
 ## First launch
 

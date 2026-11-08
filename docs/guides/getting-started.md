@@ -1,8 +1,8 @@
 # Your first Yuntu Editor project
 
-Start with the [1.0.0-beta Windows x64 release](../release/1.0.0-beta/README.md). This walkthrough covers a small local editing workflow; check the release notes for package requirements, known issues, and verification limits.
+Start with the [1.0.0-beta Windows x64 release](../release/1.0.0-beta/README.md). This beta walkthrough covers a small local editing workflow; it does not establish compatibility on every Windows device. Check the release notes for package requirements, known issues, and verification limits.
 
-1. Install the verified release using [its installation instructions](installing-a-release.md), then check its version in About.
+1. Install the beta release using [its installation instructions](installing-a-release.md), then check its version in About.
 2. Create a local project in a directory you control. Use its add-page action if it does not already have an initial page.
 3. Add a container, a heading, a short description, and a button. Name the important elements so that you can identify them in review and AI instructions.
 4. Adjust layout and text properties. Finish pending field input or Apply actions and wait for saving to complete.

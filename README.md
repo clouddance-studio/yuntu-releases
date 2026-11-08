@@ -56,7 +56,7 @@ The installer includes its own bridge snapshot. To use the separate 0.2.0 four-t
 This is a **Windows x64 prerelease**. Installation acceptance was confirmed by the release owner. The installer is unsigned; review its [exact identity, signing state, known issues, and verification limits](docs/release/1.0.0-beta/README.md) and compare the published checksum before use. Back up important projects before beta upgrades.
 
 - Preview, media, animation, and export coverage varies by document, control, effect, and target. Supported animation and recording workflows can export video; some video previews are silent.
-- JSON is Yuntu's versioned exchange format. The installer includes official Web, WeChat Mini Program, Android, and iOS exporter packages. Generated output needs integration with application logic and validation in its target environment.
+- JSON is Yuntu's versioned exchange format. The installer includes official Web, WeChat Mini Program, Android, and iOS exporter packages. Package inclusion does not establish end-to-end validation of generated output on every target platform. Generated output needs integration with application logic and validation in its target environment.
 - The optional official Web exporter produces React / TypeScript for a supported subset. Format, bridge, and generator versions are independent of the application version.
 - Production account services, subscriptions, hosted collaboration, cloud project storage, and trusted automatic updates are not presented as available beta features. Team-related text in the sample dashboard is demo content.
 - Microsoft Store/MSIX and the company website remain separate preparation work. No verified Store installation link is announced here.

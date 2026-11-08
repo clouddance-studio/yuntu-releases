@@ -77,7 +77,7 @@ def identity_mismatches(identity, target, label):
             for key in ("version", "channel", "windowsFileVersion") if identity.get(key) != target.get(key)]
 
 
-def check(root=ROOT, require_ready=False, editor_identity=None):
+def check(root=ROOT, require_ready=False, editor_identity=None, build_identity=None):
     errors = []
     record = json.loads((root / "docs/release/readiness.json").read_text(encoding="utf8"))
     failures, pending = validate_readiness(record, require_ready)
@@ -87,6 +87,13 @@ def check(root=ROOT, require_ready=False, editor_identity=None):
         errors.extend(identity_mismatches(source, record["releaseTarget"], "Editor release configuration"))
     elif require_ready:
         errors.append("Final release check requires --editor-identity pointing to the actual editor release configuration")
+    if build_identity is not None:
+        built = json.loads(Path(build_identity).read_text(encoding="utf8"))
+        if built.get("format") != "yuntu-editor-build-identity/1" or built.get("product") != "Yuntu Editor" or built.get("profile") != "release":
+            errors.append("Actual build identity must describe a release-profile Yuntu Editor executable")
+        errors.extend(identity_mismatches(built, FIXED_TARGET, "Actual editor executable"))
+    elif require_ready:
+        errors.append("Final release check requires --build-identity captured from the actual executable --release-info")
     for name in record["preparedMaterials"]:
         if not inside(root, name).is_file():
             errors.append("Missing preparation material: " + name)
@@ -134,9 +141,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--require-ready", action="store_true")
     parser.add_argument("--editor-identity", type=Path, help="Read and compare the actual editor packaging/release.json without changing it")
+    parser.add_argument("--build-identity", type=Path, help="Read actual executable --release-info JSON; never execute an installer")
     args = parser.parse_args()
     try:
-        errors, pending = check(require_ready=args.require_ready, editor_identity=args.editor_identity)
+        errors, pending = check(require_ready=args.require_ready, editor_identity=args.editor_identity, build_identity=args.build_identity)
     except (OSError, ValueError, KeyError, TypeError) as error:
         print("Preparation check failed: " + str(error), file=sys.stderr)
         return 1

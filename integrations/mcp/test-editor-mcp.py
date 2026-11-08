@@ -25,7 +25,7 @@ class FakeTransport:
     def __init__(self):
         self.calls = []
         self.owner = "main-owner-1"
-        self.methods = set(BRIDGE.READ_METHODS + BRIDGE.EXECUTE_METHODS + ("ai.execute",))
+        self.methods = set(BRIDGE.READ_METHODS + BRIDGE.EXECUTE_METHODS + BRIDGE.OUTPUT_METHODS + ("ai.execute",))
         self.error_method = None
         self.transport_failure = None
         self.bad_capabilities = False
@@ -523,10 +523,10 @@ class BridgeTests(unittest.TestCase):
         self.assertEqual(self.transport.calls, [])
         self.assertFalse(self.server.initialized)
 
-    def test_only_three_tools_with_finite_allowlists_are_advertised(self):
+    def test_four_tools_with_separate_finite_allowlists_are_advertised(self):
         self.initialize()
         listing = self.request("tools/list")["result"]["tools"]
-        self.assertEqual([tool["name"] for tool in listing], ["editor_read", "editor_execute", "editor_prompts"])
+        self.assertEqual([tool["name"] for tool in listing], ["editor_read", "editor_execute", "editor_prompts", "editor_output"])
         self.assertEqual(listing[0]["inputSchema"]["properties"]["method"]["enum"], list(BRIDGE.READ_METHODS))
         self.assertEqual(listing[1]["inputSchema"]["properties"]["method"]["enum"], list(BRIDGE.EXECUTE_METHODS))
         self.assertIn("expectedSessionId", listing[1]["inputSchema"]["required"])
@@ -534,6 +534,89 @@ class BridgeTests(unittest.TestCase):
         self.assertNotIn("ai.execute", BRIDGE.EXECUTE_METHODS)
         self.assertNotIn("editor.show", BRIDGE.EXECUTE_METHODS)
         self.assertNotIn("shell.execute", BRIDGE.EXECUTE_METHODS)
+        self.assertEqual(listing[3]["inputSchema"]["properties"]["method"]["enum"], list(BRIDGE.OUTPUT_METHODS))
+        self.assertIn("expectedSessionId", listing[3]["inputSchema"]["required"])
+        self.assertFalse(listing[3]["annotations"]["readOnlyHint"])
+
+    def test_validation_snapshot_and_export_poll_use_exact_readonly_native_methods(self):
+        self.initialize()
+        for method, params in [("document.validate", {"expectedRevision": 12}), ("preview.snapshot", {"source": {"kind": "committed", "expectedRevision": 12}}), ("project.export.read", {})]:
+            result = self.tool("editor_read", {"method": method, "params": params})
+            self.assertFalse(result["result"]["isError"])
+            self.assertEqual(self.transport.calls[-1]["request"]["method"], method)
+            self.assertEqual(self.transport.calls[-1]["request"]["params"], params)
+        self.assertEqual(self.transport.count("ai.execute"), 0)
+
+    def test_output_jobs_keep_exact_source_project_configuration_and_path(self):
+        self.initialize()
+        owner = self.read_owner()
+        base = {"projectKey": "actual-project", "expectedManifestHash": "a" * 64}
+        version = dict(base, expectedConfigurationSha256=None, uiVersion="1.0.0-draft.1", mappingsVersion="1.0.0-draft.1")
+        cases = [
+            ("preview.render", {"source": {"kind": "plan", "planId": "actual-plan", "expectedRevision": 12}, "format": "png", "outputPath": "proof.png"}),
+            ("job.cancel", {"jobId": "actual-preview-job"}),
+            ("project.export.settings", base), ("project.export.capture", base),
+            ("project.export.configure", version), ("project.export.write", dict(version, outputDirectory="exports/ui")),
+        ]
+        for method, params in cases:
+            result = self.tool("editor_output", {"method": method, "params": params, "expectedSessionId": owner})
+            self.assertFalse(result["result"]["isError"])
+            self.assertEqual(self.transport.count(method), 1)
+            self.assertEqual(self.transport.calls[-1]["request"]["params"], params)
+            self.assertEqual(self.transport.calls[-1]["session"], owner)
+        self.assertEqual(self.transport.count("ai.execute"), 0)
+
+    def test_output_is_independent_of_ai_execute_but_never_a_fallback_for_author_writes(self):
+        self.initialize()
+        owner = self.read_owner()
+        self.transport.methods.remove("ai.execute")
+        result = self.tool("editor_output", {"method": "preview.render", "params": {"source": {"kind": "committed", "expectedRevision": 12}, "format": "png", "outputPath": "proof.png"}, "expectedSessionId": owner})
+        self.assertFalse(result["result"]["isError"])
+        self.assertTrue(self.execution(expectedSessionId=owner)["result"]["isError"])
+        self.assertEqual(self.transport.count("document.apply"), 0)
+
+    def test_output_rejects_stale_session_before_native_work_and_does_not_retry(self):
+        self.initialize()
+        owner = self.read_owner()
+        self.transport.owner = "another-author"
+        args = {"method": "project.export.write", "params": {}, "expectedSessionId": owner}
+        for _ in range(2):
+            result = self.tool("editor_output", args)
+            self.assertEqual(self.content(result)["error"]["code"], "E_SESSION")
+        self.assertEqual(self.transport.count("project.export.write"), 0)
+
+    def test_output_native_rejection_and_transport_timeout_are_not_success_or_retried(self):
+        self.initialize()
+        owner = self.read_owner()
+        args = {"method": "preview.render", "params": {"source": {"kind": "committed", "expectedRevision": 12}, "format": "png", "outputPath": "proof.png"}, "expectedSessionId": owner}
+        self.transport.error_method = "preview.render"
+        result = self.tool("editor_output", args)
+        self.assertEqual(self.content(result)["error"]["code"], "E_GUI_BUSY")
+        self.assertNotIn(FAKE_TOKEN, json.dumps(result))
+        self.transport.error_method = None
+        self.transport.transport_failure = "preview.render"
+        result = self.tool("editor_output", args)
+        self.assertFalse(self.content(result)["error"]["retried"])
+        self.assertEqual(self.transport.count("preview.render"), 2)
+
+    def test_output_absent_capability_never_falls_back_to_author_execution(self):
+        self.initialize()
+        owner = self.read_owner()
+        self.transport.methods.remove("project.export.write")
+        result = self.tool("editor_output", {"method": "project.export.write", "params": {}, "expectedSessionId": owner})
+        self.assertEqual(self.content(result)["error"]["code"], "E_METHOD")
+        self.assertEqual(self.transport.count("project.export.write"), 0)
+        self.assertEqual(self.transport.count("ai.execute"), 0)
+
+    def test_output_cannot_tunnel_author_shell_generator_or_unscoped_cancel_commands(self):
+        self.initialize()
+        before = len(self.transport.calls)
+        for method in ["document.apply", "shell.execute", "project.export.generate", "project.export.cancel", "preview.snapshot"]:
+            result = self.tool("editor_output", {"method": method, "params": {}, "expectedSessionId": "observed-owner"})
+            self.assertEqual(result["error"]["code"], -32602)
+        for args in [{"method": "preview.render", "params": {}}, {"method": "preview.render", "params": {}, "expectedSessionId": ""}, {"method": "preview.render", "params": {}, "expectedSessionId": "observed-owner", "clientLabel": "unexpected"}]:
+            self.assertEqual(self.tool("editor_output", args)["error"]["code"], -32602)
+        self.assertEqual(len(self.transport.calls), before)
 
     def test_each_tool_refreshes_capabilities_and_uses_current_owner(self):
         self.initialize()

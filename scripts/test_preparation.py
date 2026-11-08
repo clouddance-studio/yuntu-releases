@@ -42,6 +42,11 @@ class ReadinessTests(unittest.TestCase):
         self.assertTrue(any("user-fixed release version" in error for error in errors))
         self.assertTrue(any("user-fixed release windowsFileVersion" in error for error in errors))
 
+    def test_newer_beta_executable_also_cannot_replace_the_fixed_release(self):
+        observed_build = {"version": "1.0.1-beta", "channel": "beta", "windowsFileVersion": "1.0.1.0"}
+        errors = identity_mismatches(observed_build, self.record["releaseTarget"], "Actual editor executable")
+        self.assertEqual(len(errors), 2)
+
     def test_branch_and_editor_identity_must_match_the_fixed_target(self):
         self.record["branch"] = "release/1.0.0-beta.3"
         self.assertTrue(any("branch does not match" in error for error in validate_readiness(self.record)[0]))

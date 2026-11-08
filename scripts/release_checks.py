@@ -1,4 +1,5 @@
 """Release data and file invariants; never executes a package or contacts a service."""
+import ast
 import hashlib
 import re
 from pathlib import Path, PurePosixPath
@@ -37,6 +38,11 @@ def validate_connector(root, provenance):
             errors.append("Invalid connector file identity: " + name)
         elif file.stat().st_size != identity["bytes"] or sha256_file(file) != identity["sha256"]:
             errors.append("Connector snapshot changed without provenance: " + name)
+    if provenance.get("bridgeVersion") is not None:
+        tree = ast.parse((directory / "editor-mcp.py").read_text(encoding="utf8"))
+        versions = [ast.literal_eval(node.value) for node in tree.body if isinstance(node, ast.Assign) and any(isinstance(target, ast.Name) and target.id == "BRIDGE_VERSION" for target in node.targets)]
+        if versions != [provenance["bridgeVersion"]]:
+            errors.append("Connector component version differs from its executable declaration")
     return errors
 
 

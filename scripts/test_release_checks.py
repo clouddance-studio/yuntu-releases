@@ -69,6 +69,11 @@ class ReleaseFileTests(unittest.TestCase):
         ready["availableMarkets"] = []
         self.assertTrue(validate_listing_facts(ready, True))
 
+    def test_connector_component_version_cannot_be_relabelled_in_metadata(self):
+        provenance = json.loads((ROOT / "integrations/mcp/source-provenance.json").read_text(encoding="utf8"))
+        provenance["bridgeVersion"] = "9.9.9"
+        self.assertTrue(any("component version differs" in error for error in validate_connector(ROOT, provenance)))
+
 
 if __name__ == "__main__":
     unittest.main()

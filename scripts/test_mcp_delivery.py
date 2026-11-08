@@ -11,17 +11,19 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 BRIDGE = ROOT / "integrations/mcp/editor-mcp.py"
-ABSENT_METHODS = ("document.validate", "preview.snapshot", "preview.render", "project.export.settings", "project.export.read", "project.export.write")
+READ_METHODS = {"document.validate", "preview.snapshot", "project.export.read"}
+OUTPUT_METHODS = {"preview.render", "job.cancel", "project.export.settings", "project.export.capture", "project.export.configure", "project.export.write"}
 
 
 class DeliveryTests(unittest.TestCase):
-    def test_unexposed_native_methods_are_not_accidentally_advertised(self):
+    def test_new_operations_have_separate_read_and_output_routes(self):
         spec = importlib.util.spec_from_file_location("delivery_bridge", BRIDGE)
         bridge = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(bridge)
         tools = bridge.tools()
-        exposed = set(tools[0]["inputSchema"]["properties"]["method"]["enum"]) | set(tools[1]["inputSchema"]["properties"]["method"]["enum"])
-        self.assertTrue(set(ABSENT_METHODS).isdisjoint(exposed))
+        self.assertTrue(READ_METHODS <= set(tools[0]["inputSchema"]["properties"]["method"]["enum"]))
+        self.assertEqual(OUTPUT_METHODS, set(tools[3]["inputSchema"]["properties"]["method"]["enum"]))
+        self.assertTrue(OUTPUT_METHODS.isdisjoint(tools[1]["inputSchema"]["properties"]["method"]["enum"]))
 
     def test_stdio_lifecycle_and_capability_read_in_a_standalone_process(self):
         received = []
@@ -54,7 +56,7 @@ class DeliveryTests(unittest.TestCase):
                     self.assertEqual(run.stderr, "")
                     responses = [json.loads(line) for line in run.stdout.splitlines()]
                     self.assertEqual([item["id"] for item in responses], [1, 2, 3])
-                    self.assertEqual([tool["name"] for tool in responses[1]["result"]["tools"]], ["editor_read", "editor_execute", "editor_prompts"])
+                    self.assertEqual([tool["name"] for tool in responses[1]["result"]["tools"]], ["editor_read", "editor_execute", "editor_prompts", "editor_output"])
                     self.assertFalse(responses[2]["result"]["isError"])
                     self.assertEqual(received, [("editor.capabilities", True), ("editor.capabilities", True)])
                     self.assertNotIn(fake_token, run.stdout)

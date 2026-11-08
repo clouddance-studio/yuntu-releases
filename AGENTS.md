@@ -15,10 +15,11 @@
 - `docs/release/`：发布内容准备、流程和记录；准备方案不等于对外承诺。
 - `docs/guides/`：英文安装／Release 使用、上手、FAQ、支持和 Skill／MCP 接入说明；未经验证的域名和邮箱不作为可用入口。
 - `integrations/skills/yuntu-editor/`：面向用户作品创作的英文 Skill，不是内部源码开发 Skill。
-- Skill 可调用范围是 MCP 工具 Schema 与编辑器 capabilities 的交集。当前桥接未开放 `document.validate`、纯作品 `preview.*` 或 `project.export.*`；对应 GUI 操作必须明示，不能用原生 API 清单冒充 MCP 能力，也不能用 `codegen.export` 代替标准 JSON。
-- `integrations/mcp/`：外部连接器及协议测试的明确 Git 来源快照；`source-provenance.json` 核对提交、原始字节及摘要。两个运行脚本保持同目录，不依赖私有编辑器源码路径。最终安装版与客户端兼容仍须单独验证。
+- Skill 可调用范围是 MCP 工具 Schema 与编辑器 capabilities 的交集。桥接 0.2.0 的 `editor_read` 已接通 `document.validate`、`preview.snapshot`、`project.export.read`；`editor_output` 仅允许原生渲染／预览取消和标准导出 settings/configure/capture/write，保留原生会话、CAS、草稿／UI、路径和发布门禁。作者命令继续经 `editor_execute` → `ai.execute`，不存在失败后降级直写。不暴露无 jobId 作用域的 export.cancel，不用 `codegen.export` 代替标准 JSON。
+- `integrations/mcp/`：外部连接器及协议测试。`source-provenance.json` 分别保留上游 baseline 与本地发布分支增量，不将修改后的桥接冒充原提交字节；`files` 固定当前交付摘要。两个运行脚本保持同目录，不依赖私有编辑器源码路径。组件版本 0.2.0 与应用发行版 1.0.0-beta 独立；最终安装版与客户端兼容仍须单独验证。
 - `scripts/check_preparation.py`：Python 3.11+ 只读准备检查；`--require-ready` 会在发布门禁未完成时拒绝通过。检查通过不授权构建或发布。
 - `scripts/release_checks.py`：固定版本、完整连接器清单、Store 必填事实及归档路径／摘要核对。`python -B -m unittest discover -s scripts -p 'test_*.py'` 验证准备逻辑、文件边界和 stdio 交付；stdio 测试仅连接合成 loopback 服务，不接触正在验收的编辑器。
+- `scripts/verify_mcp_native.py`：显式 `--info` 和 `.local` 内新测试目录的 opt-in 原生集成验证；仅允许空的隔离工作区，不选择发现文件或覆盖旧项目。只读轮询可在 session 切换时重新读取，写任务不自动重试。当前可运行程序实际为 1.0.1-beta，只记为集成证据，不清除目标版的最终验收门禁。
 - `releases/<产品版本>/<平台-架构>/`：本地最终发布产物，实际发布时创建。例如 `releases/1.0.0-beta/windows-x64/`，版本必须取本次发行真源，不能固定沿用示例。
 - 后续按实际材料增加用户指南、截图、可编辑示例和生成器教程，不预建空内容冒充交付。
 - 安装包若启用 GitHub 备用分发，作为 Releases 附件管理，不放进 Git 历史。

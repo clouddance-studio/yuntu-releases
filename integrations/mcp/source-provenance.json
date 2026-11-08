@@ -1,6 +1,6 @@
 {
   "format": "yuntu-mcp-source-snapshot/1",
-  "status": "local-preparation",
+  "status": "local-release-branch-development",
   "capturedOn": "2026-11-08",
   "sourceCommit": "b44d2fd233a2e699dcf53a135bbe797eb930e7f1",
   "observedEditorVersion": "1.0.0-beta.3",
@@ -8,6 +8,24 @@
   "validationPython": "3.12.14",
   "distributionTerms": "Pending release approval; no new license is granted by this preparation.",
   "files": {
+    "editor-mcp.py": {
+      "sha256": "09602f744ab9b6dd101e4a2d60a7193579f438f8f5226d6170bc873ce03dc4f1",
+      "bytes": 24926,
+      "matchesSourceCommit": false
+    },
+    "editor-api.py": {
+      "sha256": "4ae4826a2c08a0829fe6024acb53b267f596cb70a245420a2e6121440da8dd5a",
+      "bytes": 8642,
+      "matchesSourceCommit": true
+    },
+    "test-editor-mcp.py": {
+      "sha256": "443c19862d9d904e0724807651936ded6c239d27ee764253087b4d7c74f0202a",
+      "bytes": 55011,
+      "matchesSourceCommit": false
+    }
+  },
+  "sourceBytes": "editor-api.py remains the exact upstream snapshot; editor-mcp.py and its protocol tests include the listed local release-branch changes. baseFiles preserves their original identities; files pins the delivered bytes.",
+  "baseFiles": {
     "editor-mcp.py": {
       "sha256": "97a91a529df18a9e129ec243eb0bd2ba1496ca69dc612081c0ac55bcda3a03bd",
       "bytes": 22368,
@@ -24,5 +42,11 @@
       "matchesSourceCommit": true
     }
   },
-  "sourceBytes": "Exported from the named Git commit, not from a changing acceptance worktree."
+  "bridgeVersion": "0.2.0",
+  "releaseTarget": "1.0.0-beta",
+  "localChanges": [
+    "Added readonly document validation, preview snapshots and standard export status.",
+    "Added editor_output for finite native render/export job APIs with session and native CAS/path guards.",
+    "Added output-route isolation, capability, stale-session, failure and no-retry regression tests."
+  ]
 }

@@ -9,6 +9,7 @@ The following English preparation guides are now available locally. They must be
 - [Install and use a release](guides/installing-a-release.md).
 - [Create your first project](guides/getting-started.md).
 - [Set up the user Skill and MCP connection](guides/ai-mcp.md).
+- [Validate, preview, render, and export through MCP](guides/mcp-validation-preview-export.md).
 - [Frequently asked questions](guides/faq.md).
 - [Prepare a support report](guides/support.md).
 
@@ -21,3 +22,4 @@ The website domain is still under review, and no public download, Store listing,
 - [Final launch handoff (Chinese)](release/launch-handoff.md): acceptance inputs, MSIX channel, domain hold, and publication boundaries.
 - [Repository boundaries (Chinese)](release/repository-boundaries.md): existing repository responsibilities and optional future splits.
 - [Release-branch review (Chinese)](release/review-2026-11-08.md): findings, local fixes, verification, and remaining acceptance limits.
+- [MCP output implementation and native verification (Chinese)](release/mcp-output-verification-2026-11-08.md): bridge 0.2.0 capabilities, real native output, exact version guards, and remaining final-package acceptance.

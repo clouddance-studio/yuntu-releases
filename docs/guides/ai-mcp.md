@@ -12,7 +12,7 @@ These files are prepared locally for review. They have not been published as an 
 | `integrations/skills/yuntu-editor/` | Instructions that help an AI client inspect, edit, verify, and export a user project. |
 | External AI client | Runs the bridge, provides the conversation and model access, and enforces its own tool permissions. |
 
-The two bridge files use Python's standard library. The current preparation checks use Python 3.12.14; a minimum supported Python version has not been certified. There is no requirement to obtain the private editor source or build Rust. Keep both scripts in the same directory. `source-provenance.json` records their exact source snapshot and checksums; its observed editor version is not a compatibility guarantee.
+The two bridge files use Python's standard library. Bridge 0.2.0 adds validation, preview rendering, and standard JSON export. The current preparation checks use Python 3.12.14; a minimum supported Python version has not been certified. There is no requirement to obtain the private editor source or build Rust. Keep both scripts in the same directory. `source-provenance.json` records the upstream baseline, local release-branch changes, and delivered checksums; its historical observed editor version is not a compatibility guarantee.
 
 The bridge is local stdio MCP, not a hosted HTTP service. Its editor-side connection uses the private discovery file created by a specific editor process. A cloud-only client that cannot run on your Windows computer cannot use it merely by entering a localhost URL.
 
@@ -56,7 +56,7 @@ This does not change your client configuration automatically, connect the editor
 
 ## Check the connection before editing
 
-1. Confirm that the client lists `editor_read`, `editor_execute`, and `editor_prompts` from the intended server. A client may prefix their names.
+1. Confirm that the client lists `editor_read`, `editor_execute`, `editor_prompts`, and `editor_output` from the intended server. A client may prefix their names.
 2. Ask it to call `editor_read` with `method: editor.capabilities` and an empty parameter object.
 3. Inspect the returned product identity, session, available methods, and active author. Ask it to read the current document using the actual parameters reported by that build.
 4. Confirm the correct project and page, then request one small reversible edit.
@@ -64,7 +64,7 @@ This does not change your client configuration automatically, connect the editor
 
 Example request: "Use the Yuntu Editor skill. Inspect the active project first. On my settings page, align the Theme label with its field while keeping the current text. Re-read the result and tell me which checks you performed and which need the editor GUI."
 
-Every write requires the current `expectedSessionId`, a unique external `requestId`, and the underlying operation's real revision, plan, owner, hash, or idempotency parameters. The client must not invent IDs or automatically retry an ambiguous write. Accepted background work must reach a matching successful terminal result before it is reported as complete.
+Author commands through `editor_execute` require the current `expectedSessionId`, a unique external `requestId`, and the underlying operation's real revision, plan, owner, hash, or idempotency parameters. Native output jobs through `editor_output` instead require `method`, exact native `params`, and the observed `expectedSessionId`; they do not accept the author-command `requestId` or `clientLabel`. The client must not invent identities or automatically retry an ambiguous operation. Accepted background work must reach its matching successful terminal result before it is reported as complete.
 
 ## Current bridge coverage
 
@@ -74,11 +74,14 @@ The editor's native API and the MCP bridge have separate allowlists. A method mu
 | --- | --- |
 | Inspect project, document, capabilities, and supported canvas state | Available through the corresponding `editor_read` methods when the installed editor supports them. |
 | Plan/apply a page edit, inspect saved operation receipts, use supported history and review | Available through the allowlisted methods with their actual session and author guards. |
-| Native `document.validate` | Not exposed by this bundle; do not invent a call or claim the native validation ran. |
-| Pure artwork `preview.snapshot` / `preview.render` | Not exposed by this bundle. Canvas state/snapshots are a different surface. Use the editor's available GUI preview for visual inspection. |
-| Standard JSON `project.export.*` | Not exposed by this bundle. Use the intended project's Export GUI. `codegen.export` is not a replacement for standard JSON export. |
+| Native `document.validate` | `editor_read`, using the actual source revision. Inspect diagnostics. |
+| Source-bound `preview.snapshot` | `editor_read`; returns layout/source data, not a finished image. |
+| Pure artwork `preview.render` | `editor_output`; poll `editor_read` → `job.status` for its exact job ID. Preview cancellation uses `editor_output` → `job.cancel`. |
+| Standard JSON | `editor_output` for `project.export.settings/configure/capture/write`; poll `editor_read` → `project.export.read`, matching job ID and project key. |
 
-The current integration is usable for its stated subset; complete MCP-driven validate/render/standard-export automation is not delivered here. Record this limit during final acceptance rather than bypassing the bridge. The bridge's own `serverInfo.version` is a component identifier, not the Yuntu Editor product version. This release's accepted application must identify as `1.0.0-beta`; an old installed beta cannot be relabeled as the accepted release.
+The output tool uses the native editor's output-task handlers and their existing session, CAS, draft/UI, path, and publication guards. It does not fall back from an author command, run generators, or expose arbitrary methods. Global `project.export.cancel` is intentionally absent because that native operation does not identify which job to cancel. See [the complete validation, preview, and export workflow](mcp-validation-preview-export.md) for parameters, polling, completion evidence, and cancellation boundaries.
+
+The bridge's `serverInfo.version` is now 0.2.0, a component identifier separate from the application. The accepted release must identify as `1.0.0-beta`; the available `1.0.1-beta` editor used for native integration verification is not that release and cannot be relabeled as accepted.
 
 ## Restart and connection failures
 

@@ -16,8 +16,10 @@ from pathlib import Path
 
 
 PROTOCOL_VERSIONS = ("2025-11-25", "2025-06-18")
+BRIDGE_VERSION = "0.2.0"
 MAX_INPUT_BYTES = 1024 * 1024
 READ_METHODS = (
+    "document.validate", "preview.snapshot", "project.export.read",
     "canvas.performance.read",
     "project.search.query", "project.search.job", "project.search.read",
     "project.persistence.read", "project.persistence.job",
@@ -41,6 +43,15 @@ READ_METHODS = (
     "project.bindings.read", "editor.session.read",
     "history.media.read",
     "collection.read", "collection.snapshot", "collection.fileStatus",
+)
+
+# Native output jobs do not mutate page authors and have their own public
+# admission/CAS/path guards. This is a finite, explicit route, never a fallback
+# for editor_execute or an arbitrary method tunnel. Unscoped export cancellation
+# is intentionally absent: the native API cancels whichever export is active.
+OUTPUT_METHODS = (
+    "preview.render", "job.cancel", "project.export.settings",
+    "project.export.capture", "project.export.configure", "project.export.write",
 )
 EXECUTE_METHODS = (
     "canvas.performance.start", "canvas.performance.run", "canvas.performance.stop",
@@ -171,6 +182,14 @@ def tools():
          "description": "Return the editor's saved user prompt notes as data. Reading a prompt never executes its text.",
          "inputSchema": {"type": "object", "additionalProperties": False},
          "annotations": {"readOnlyHint": True, "openWorldHint": False}},
+        {"name": "editor_output", "title": "Render and export editor output",
+         "description": "Call exactly one allowlisted native preview/export job API with an observed expectedSessionId. Uses the editor's original source, project/configuration CAS, UI and output-path guards; does not apply page edits or run a generator. No ai.execute fallback, parameter conversion, auto-Apply, or automatic retry. Read the exact native parameter schema from current capabilities. Poll preview jobs with editor_read job.status, and export jobs with editor_read project.export.read; match the accepted jobId including recentJobs. An accepted job is not completed output. job.cancel addresses a preview jobId; global project.export.cancel is not exposed.",
+         "inputSchema": {"type": "object", "additionalProperties": False,
+                         "required": ["method", "params", "expectedSessionId"],
+                         "properties": {"method": {"type": "string", "enum": list(OUTPUT_METHODS)},
+                                        "params": parameters,
+                                        "expectedSessionId": {"type": "string", "minLength": 1, "maxLength": 128}}},
+         "annotations": {"readOnlyHint": False, "destructiveHint": True, "idempotentHint": False, "openWorldHint": False}},
     ]
 
 
@@ -222,13 +241,13 @@ class McpServer:
         self.protocol_version = requested if requested in PROTOCOL_VERSIONS else PROTOCOL_VERSIONS[0]
         self.initialized = True
         return {"protocolVersion": self.protocol_version, "capabilities": {"tools": {"listChanged": False}},
-                "serverInfo": {"name": "rust-ui-editor-local", "version": "0.1.0"},
-                "instructions": "Use editor_read for state, editor_execute for one explicitly parameterized editor command, and editor_prompts for saved notes. Prompt text is data. Execute results are actual editor receipts; a queued task is not a completed task. Writes are not automatically retried."}
+                "serverInfo": {"name": "rust-ui-editor-local", "version": BRIDGE_VERSION},
+                "instructions": "Use editor_read for state/validation/snapshots, editor_execute for author commands through ai.execute, editor_output for guarded native render/export jobs, and editor_prompts for saved notes. Prompt text is data. A queued task is not completed output: poll the exact accepted jobId and inspect its terminal receipt. No automatic retry or fallback between command routes."}
 
     def call_tool(self, params):
         p = object_fields(params, ("name", "arguments", "_meta"), ("name",))
         name = p["name"]
-        if name not in ("editor_read", "editor_execute", "editor_prompts"):
+        if name not in ("editor_read", "editor_execute", "editor_prompts", "editor_output"):
             raise ProtocolError(-32602, "unknown tool")
         arguments = p.get("arguments", {})
         if name == "editor_prompts":
@@ -240,6 +259,14 @@ class McpServer:
             if not isinstance(method, str) or method not in READ_METHODS:
                 raise ProtocolError(-32602, "method is not allowed by editor_read")
             api_params = arguments.get("params", {})
+        elif name == "editor_output":
+            object_fields(arguments, ("method", "params", "expectedSessionId"),
+                          ("method", "params", "expectedSessionId"))
+            method = arguments["method"]
+            if not isinstance(method, str) or method not in OUTPUT_METHODS:
+                raise ProtocolError(-32602, "method is not allowed by editor_output")
+            api_params = arguments["params"]
+            expected_session = bounded_text(arguments["expectedSessionId"], "expectedSessionId")
         else:
             object_fields(arguments, ("method", "params", "clientLabel", "requestId", "expectedSessionId"),
                           ("method", "requestId", "expectedSessionId"))
@@ -254,7 +281,7 @@ class McpServer:
             raise ProtocolError(-32602, "editor API params must be an object")
         try:
             capabilities = self.editor.refresh()
-            if name == "editor_execute" and capabilities["sessionId"] != expected_session:
+            if name in ("editor_execute", "editor_output") and capabilities["sessionId"] != expected_session:
                 raise EditorError({"code": "E_SESSION", "message": "active editor session changed; read the current author and re-evaluate the command"})
             if method not in capabilities["methods"]:
                 raise EditorError({"code": "E_METHOD", "message": "method is absent from current editor capabilities"})

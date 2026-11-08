@@ -4,15 +4,19 @@ Windows x64 beta · Application version **1.0.0-beta** · Windows file version *
 
 This is a GitHub prerelease for evaluation. Installation acceptance was confirmed by the release owner on November 8, 2026. Microsoft Store submission and the company website remain separate work; this release does not require the planned website domain.
 
+**Unsigned beta:** a trusted Authenticode code-signing certificate is not yet available for this release. Windows may show **Windows protected your PC** and **Unknown publisher**. If you trust the official download and its SHA-256 matches, select **More info → Run anyway** to continue. See the [SmartScreen instructions](../../guides/installing-a-release.md#windows-smartscreen).
+
 ## Downloads
 
 Download assets from [this release](https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta):
 
 - **Yuntu-Editor-1.0.0-beta-windows-x64-setup.exe** — Windows x64 installer, 115,935,744 bytes.
+- **[Yuntu-Editor-1.0.0-beta-windows-x64.zip](https://github.com/clouddance-studio/yuntu-releases/releases/download/v1.0.0-beta/Yuntu-Editor-1.0.0-beta-windows-x64.zip)** — no-install Windows x64 ZIP, 161,788,355 bytes (about 154 MiB). Extract the entire archive; see [ZIP instructions](zip-package.md).
+- **[Yuntu-Editor-1.0.0-beta-windows-x64.zip.sha256](https://github.com/clouddance-studio/yuntu-releases/releases/download/v1.0.0-beta/Yuntu-Editor-1.0.0-beta-windows-x64.zip.sha256)** and **[zip-package-manifest.json](https://github.com/clouddance-studio/yuntu-releases/releases/download/v1.0.0-beta/zip-package-manifest.json)** — the additional ZIP checksum, exact identity, and verification scope.
 - **Yuntu-MCP-0.2.0.zip** — the separate four-tool stdio bridge, helper, provenance record, and protocol tests. Python is required separately; verification used Python 3.12.14.
 - **Yuntu-Skill-1.0.0-beta.zip** — the complete `yuntu-editor` user Skill folder. Extract it before using your client's skill installation mechanism.
-- **SHA256SUMS.txt** — SHA-256 values for all three downloads.
-- **release-manifest.json** — application/build identities, original package hashes, integration component identities, and verification boundaries.
+- **SHA256SUMS.txt** — SHA-256 values for the original installer, MCP, and Skill downloads. The additional editor ZIP has its own `.zip.sha256` sidecar.
+- **release-manifest.json** — application/build identities, original package hashes, integration component identities, and verification boundaries. This original manifest is preserved; the additional editor ZIP is described by `zip-package-manifest.json`.
 
 GitHub's automatic source archives contain this documentation and integration repository, not the editor application. This prerelease does not provide a Microsoft Store MSIX package or promise Store-managed updates.
 

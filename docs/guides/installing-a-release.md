@@ -4,6 +4,8 @@
 
 This release is fixed at **1.0.0-beta**, channel **beta**, Windows file version **1.0.0.0**. An installer filename, an older internal beta, or the MCP bridge's component version is not a substitute for that accepted application identity.
 
+Prefer to run without the installer? Download the [Windows x64 ZIP](https://github.com/clouddance-studio/yuntu-releases/releases/download/v1.0.0-beta/Yuntu-Editor-1.0.0-beta-windows-x64.zip) and follow the [extract-and-run instructions](../release/1.0.0-beta/zip-package.md). The extracted application is also unsigned.
+
 ## Choose the correct download
 
 For 1.0.0-beta, download the Windows x64 EXE from the [GitHub release](https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta). Check the exact filename and SHA-256 against its release record.
@@ -28,7 +30,19 @@ For a separately distributed EXE, you can inspect its signature:
 Get-AuthenticodeSignature -LiteralPath '.\Yuntu-Editor-1.0.0-beta-windows-x64-setup.exe'
 ```
 
-The 1.0.0-beta EXE is not Authenticode signed and has no Authenticode-verified publisher identity. The signature check should report `NotSigned`. A matching SHA-256 checksum verifies the file bytes, not the publisher. Follow your normal Windows security policy. A future Store MSIX release will use the Store's package validation workflow.
+The 1.0.0-beta EXE is not Authenticode signed and has no Authenticode-verified publisher identity. A trusted code-signing certificate is not yet available for this release. The signature check should report `NotSigned`. A matching SHA-256 checksum verifies the file bytes, not the publisher or software safety. A future Store MSIX release will use the Store's package validation workflow.
+
+## Windows SmartScreen
+
+Windows may display **Windows protected your PC**, **Microsoft Defender SmartScreen prevented an unrecognized app from starting**, and **Unknown publisher**.
+
+If you downloaded the installer from the official GitHub release, the complete SHA-256 matches, and you trust this beta:
+
+1. Select **More info** if the application details are not already visible.
+2. Confirm the filename is `Yuntu-Editor-1.0.0-beta-windows-x64-setup.exe`.
+3. Select **Run anyway** to continue with installation.
+
+You do not need to turn off SmartScreen or antivirus protection. If your device policy does not allow continuing, follow your organization's policy. A ZIP archive does not sign its contents; an extracted unsigned EXE can display the same warning.
 
 ## First launch
 

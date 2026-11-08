@@ -4,6 +4,10 @@
 
 Yes. [Yuntu Editor 1.0.0-beta is available on GitHub](https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta) as a Windows x64 prerelease. Installation acceptance was confirmed by the release owner. Microsoft Store is not yet available, and the company website domain is still under review. See the [release notes](../release/1.0.0-beta/README.md) for checksums, the unsigned installer, known issues, and verification limits.
 
+## Why does Windows show Unknown publisher?
+
+A trusted Authenticode code-signing certificate is not yet available for this beta, so Windows cannot verify its publisher and may show **Windows protected your PC**. If you trust the official GitHub release and its complete SHA-256 matches, select **More info**, then **Run anyway**. Keep Windows protection enabled. See the [SmartScreen instructions](installing-a-release.md#windows-smartscreen). A ZIP archive does not remove this warning from an extracted unsigned EXE.
+
 ## Which platform is supported?
 
 Windows x64 is the current validation target. Exact supported Windows builds, hardware, graphics requirements, and runtime dependencies must come from the accepted package's test results. macOS and browser-based editor releases are not announced here.

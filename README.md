@@ -10,6 +10,10 @@ A visual UI workspace for Windows, built with Rust.
 
 **1.0.0-beta** · Windows x64 · 111 MiB installer
 
+[**Download ZIP — no installation · 154 MiB**](https://github.com/clouddance-studio/yuntu-releases/releases/download/v1.0.0-beta/Yuntu-Editor-1.0.0-beta-windows-x64.zip) · [ZIP instructions](docs/release/1.0.0-beta/zip-package.md) · [ZIP SHA-256](https://github.com/clouddance-studio/yuntu-releases/releases/download/v1.0.0-beta/Yuntu-Editor-1.0.0-beta-windows-x64.zip.sha256)
+
+**Unsigned beta:** a trusted code-signing certificate is not yet available for this release. Windows may show **Windows protected your PC** and **Unknown publisher**. After confirming the official download and SHA-256, users who trust this release can choose **More info → Run anyway**. [Details](docs/guides/installing-a-release.md#windows-smartscreen).
+
 [Release notes](docs/release/1.0.0-beta/README.md) · [Installation guide](docs/guides/installing-a-release.md) · [SHA-256 checksums](https://github.com/clouddance-studio/yuntu-releases/releases/download/v1.0.0-beta/SHA256SUMS.txt)
 
 </div>

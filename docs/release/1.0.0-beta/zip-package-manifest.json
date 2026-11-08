@@ -1,0 +1,26 @@
+{
+  "format": "yuntu-zip-package/1",
+  "product": "Yuntu Editor",
+  "version": "1.0.0-beta",
+  "platform": "windows-x64",
+  "name": "Yuntu-Editor-1.0.0-beta-windows-x64.zip",
+  "bytes": 161788355,
+  "sha256": "f2e8bb73863c87c832e3674c89313f11c6aa7105f95eebe7aeedd6458461986d",
+  "applicationSha256": "fec08db6eaaf9745c7f08f48f90af2c7e4afc4b7ea81324f7babead9e835d28c",
+  "buildIdentitySha256": "4d95546b6a9cf2c6b951e00d5ed96db65534fdb43d89ba26f8ed611824065a0a",
+  "sourcePackageReportSha256": "d44f44f49e3c941803de1636882c92fc8f1b8b7d651e80b23c0bb59305e1ad8e",
+  "payloadFilesVerified": 1060,
+  "payloadBytesVerified": 404753888,
+  "archiveFiles": 1061,
+  "signature": "NotSigned",
+  "verification": {
+    "archiveCRC": "passed",
+    "allPayloadSha256": "passed",
+    "extractedReleaseInfo": "passed",
+    "guiAcceptance": "not-performed",
+    "externalClientModelPairing": "not-verified"
+  },
+  "publication": "GitHub prerelease attachment",
+  "profile": "uses Windows user profile; not a self-contained portable profile",
+  "releaseUrl": "https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta"
+}

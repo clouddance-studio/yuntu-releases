@@ -2,7 +2,7 @@
 
 This repository provides Yuntu Editor downloads, product information, user guides, and release notes. English is the primary language for public content.
 
-The [1.0.0-beta GitHub prerelease](https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta) provides the Windows x64 installer and separate MCP/Skill bundles. Microsoft Store remains a planned channel; no verified Store link is available yet.
+The [1.0.0-beta GitHub prerelease](https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta) provides the Windows x64 installer, a [ZIP for manual extraction](release/1.0.0-beta/zip-package.md), and separate MCP/Skill bundles. Microsoft Store remains a planned channel; no verified Store link is available yet.
 
 Start with these English guides. Package-specific requirements, signing state, known issues, and verification limits are recorded in the [release notes](release/1.0.0-beta/README.md):
 

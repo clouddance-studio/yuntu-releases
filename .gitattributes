@@ -1,0 +1,2 @@
+# Connector provenance hashes describe the original bytes across checkouts.
+/integrations/mcp/*.py -text

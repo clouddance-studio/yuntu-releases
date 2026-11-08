@@ -1,0 +1,28 @@
+{
+  "format": "yuntu-mcp-source-snapshot/1",
+  "status": "local-preparation",
+  "capturedOn": "2026-11-08",
+  "sourceCommit": "b44d2fd233a2e699dcf53a135bbe797eb930e7f1",
+  "observedEditorVersion": "1.0.0-beta.3",
+  "editorCompatibility": "Final accepted package pairing not yet verified",
+  "validationPython": "3.12.14",
+  "distributionTerms": "Pending release approval; no new license is granted by this preparation.",
+  "files": {
+    "editor-mcp.py": {
+      "sha256": "97a91a529df18a9e129ec243eb0bd2ba1496ca69dc612081c0ac55bcda3a03bd",
+      "bytes": 22368,
+      "matchesSourceCommit": true
+    },
+    "editor-api.py": {
+      "sha256": "4ae4826a2c08a0829fe6024acb53b267f596cb70a245420a2e6121440da8dd5a",
+      "bytes": 8642,
+      "matchesSourceCommit": true
+    },
+    "test-editor-mcp.py": {
+      "sha256": "9c136a24c3163732a1d132547814cbd9163e184fb0b145eefe3b49f9b4205a2c",
+      "bytes": 49302,
+      "matchesSourceCommit": true
+    }
+  },
+  "sourceBytes": "Exported from the named Git commit, not from a changing acceptance worktree."
+}

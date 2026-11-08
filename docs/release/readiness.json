@@ -1,0 +1,44 @@
+{
+  "format": "yuntu-release-readiness/1",
+  "product": "Yuntu Editor",
+  "updatedOn": "2026-11-08",
+  "state": "local-preparation-user-review-required",
+  "branch": "release/1.0.0-beta.3",
+  "localMainBranch": "main",
+  "observedRemoteMainBranch": "main",
+  "primaryChannel": "microsoft-store-msix",
+  "observedIdentity": {
+    "version": "1.0.0-beta.3",
+    "channel": "beta",
+    "windowsFileVersion": "1.0.0.3",
+    "status": "not-frozen"
+  },
+  "finalIdentity": null,
+  "approvedAssets": [],
+  "preparedMaterials": [
+    "docs/guides/installing-a-release.md",
+    "docs/guides/getting-started.md",
+    "docs/guides/faq.md",
+    "docs/guides/support.md",
+    "docs/guides/ai-mcp.md",
+    "integrations/skills/yuntu-editor/SKILL.md",
+    "integrations/mcp/source-provenance.json",
+    "docs/release/store-listing.en.json",
+    "docs/release/screenshots.md",
+    "docs/release/release-notes.template.md",
+    "docs/release/launch-handoff.md"
+  ],
+  "gates": [
+    {"id": "editor-acceptance", "status": "pending", "reason": "The other acceptance task is still running; no final sign-off has been supplied.", "evidence": null},
+    {"id": "frozen-identity-and-artifacts", "status": "pending", "reason": "Freeze the accepted source, product and build identities, then archive exact final package bytes in this project.", "evidence": null},
+    {"id": "store-account-and-product", "status": "pending", "reason": "Company verification, reserved product name, product and publisher identities have not been confirmed complete.", "evidence": null},
+    {"id": "msix-package-and-channel", "status": "pending", "reason": "The existing EXE packaging path is not proof of Store MSIX packaging and installation.", "evidence": null},
+    {"id": "requirements-install-and-upgrade", "status": "pending", "reason": "Confirm supported Windows and hardware requirements, clean install, upgrade and uninstall on the final package.", "evidence": null},
+    {"id": "domain-and-public-website", "status": "pending", "reason": "The user confirmed on 2026-11-08 that domain review is incomplete and publication must wait; DNS, HTTPS and live pages also need verification.", "evidence": null},
+    {"id": "support-privacy-and-terms", "status": "pending", "reason": "Verify a support destination and release-specific privacy and usage terms; local website preview notices are insufficient.", "evidence": null},
+    {"id": "skill-mcp-installed-client-pairing", "status": "pending", "reason": "Verify the bundled bridge and skill with the accepted installed editor, a real external client/model, save/undo and restart reconnection.", "evidence": null},
+    {"id": "distribution-rights-and-notices", "status": "pending", "reason": "Confirm application, connector, skill, SDK, font and media-tool distribution terms and the final notices.", "evidence": null},
+    {"id": "listing-markets-and-real-assets", "status": "pending", "reason": "Review final English claims, pricing/markets, real screenshots, logos and certification instructions against accepted behavior.", "evidence": null},
+    {"id": "user-overall-review-and-publication-scope", "status": "pending", "reason": "Keep this branch separate from main; the user must review the complete result before authorizing any remote action.", "evidence": null}
+  ]
+}

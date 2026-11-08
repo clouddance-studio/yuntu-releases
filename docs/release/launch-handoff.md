@@ -1,0 +1,51 @@
+# 发布准备与最终交接
+
+更新：2026-11-08。用户明确：编辑器仍在最终验收；域名审核未通过，当前不能发布；所有材料先在版本分支整体审阅，不合并主分支。
+
+## 本地分支与本次边界
+
+- 当前工作分支：`release/1.0.0-beta.3`，版本名取准备时的 `packaging/release.json`。最终交付身份尚未冻结，不因分支名自动发布 Beta.3。
+- 用户最终确认主分支统一使用 `main`；本地和已有远程跟踪关系均保留 `main`，未改动远程默认分支。
+- 发布资料、用户 Skill、MCP 快照及检查在本地准备。不合并 `main`，不创建远程 tag／Release，不上传附件，不提交商店审核，不部署官网，不绕过域名审核。
+- 不修改正在验收的编辑器工作区、运行实例或版本真源，不重新构建、打包或复制旧 EXE 冒充最终发行。
+
+## 已可独立推进的材料
+
+英文 README、安装及 Release 使用说明、第一项目流程、FAQ、支持报告格式、用户 Skill、独立 MCP 桥接快照、英文商店文案、截图脚本、版本说明模板和本地检查已在本分支准备。它们仍需最终候选复核，不代表发布已经具备全部条件。
+
+官网已有八篇英文帮助，未来路径保持 `/yuntu/docs/`；产品介绍为 `/yuntu/`，账号页预留 `/yuntu/account/`，后台及接口继续按产品前缀划分。域名未完成审核时，不把这些规划地址填成已经可访问的商店或用户入口。官网现有隐私／条款弹窗只描述本地预览，不能直接当作编辑器生产隐私或使用许可。
+
+## 等验收交接的真实输入
+
+| 输入 | 必须确认的内容 |
+| --- | --- |
+| 最终候选身份 | 产品版本、通道、Windows 数字版本、源码提交、工作区状态、实际构建身份及二进制 `--release-info` 的一致性 |
+| 功能及兼容 | 最终验收记录、已知限制、旧 `.yt`／`.thme`／导出输入的兼容结果、账号和离线行为 |
+| 系统要求 | 已测 Windows 构建、x64、显卡／驱动、内存、磁盘、运行库；不从开发机或旧 alpha 文档推断最低值 |
+| 安装与升级 | 干净设备安装、首次启动、保存重开、卸载保留用户数据；旧 beta 升级与备份边界 |
+| AI 集成 | 最终安装版的真实启动／API 发现方式；当前 MCP 快照与客户端、Python、Skill 的组合；一次真实读／改／预览／保存／撤销／重启重连 |
+| 交付许可 | 编辑器条款、第三方 Rust／字体／SDK／媒体工具材料，以及外部桥接脚本、Skill 和示例的明确授权 |
+
+## Store 路线与现有 EXE 的区别
+
+现有内部方案优先 MSIX，首批 Windows x64。本次只核对到现有 NSIS／WPF EXE 打包入口，没有据此确认已完成 Store MSIX。功能验收、EXE 安装验收与 MSIX 商店渠道验收分别记录。
+
+MSIX 路线需取得真实 Store 包身份，完成包及干净设备验证；Store 发布过程中会对通过认证的 MSIX 重新签名。EXE／MSI 路线则有不同的签名、固定下载 URL 和静默安装要求，不能直接替换。参考 [MSIX 包要求](https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/app-package-requirements)、[EXE／MSI 包要求](https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msi/app-package-requirements)。
+
+微软明确说明，EXE／MSI 通过 Store 分发并不让现有用户获得 Store 自动或手动更新；不得把 MSIX 更新承诺套用到 EXE。见 [EXE／MSI 更新说明](https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msi/publish-update-to-your-app-on-store)。
+
+微软公司开发者认证、产品名称预留、Product ID、Publisher、市场、分发方式及价格都以真实 Partner Center 状态为准。已有海外 Free／Pro 方案仅供内部规划，未完成对应商业及账号验证时不在英文文案里承诺可购买。商店必填项以 [MSIX 提交清单](https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/create-app-submission) 核对。
+
+## 域名、支持和隐私交接
+
+用户已确认网站域名仍未审核通过，本轮明确保持待发布。之后还需分别确认 DNS、HTTPS、产品及帮助页可访问；不能用域名审核通过代替网站部署成功。
+
+最终需核实可收发的支持邮箱或真实反馈端点、编辑器实际网络服务、外部 AI 客户端和模型提供商的数据路径、账号与设备数据、日志／恢复数据、删除及保留规则，再形成与该版本一致的隐私和条款。这里不擅自补写法律承诺、公司英文法定名或不存在的邮箱。
+
+## 产物归档与用户整体审阅
+
+真正执行最终打包时，使用受控入口，先按工作区共享 **100,000,000,000 bytes 总额、80,000,000,000 bytes 预警**核对容量；首次归档前将 `yuntu-releases/releases` 登记同一预算。当前没有生成此目录或复制任何安装包。
+
+最终产物必须归档到本项目 `releases/<version>/windows-x64/`。保留安装／提交包原字节、SHA-256、英文版本说明、许可和包含真实来源的发行记录。记录产品版本、编辑器源码提交、构建身份、包身份、文件名／字节数／摘要及验收材料；同名版本不得静默替换。二进制不得进入 Git 历史。
+
+随后给用户在版本分支整体检查。只有用户明确同意相应远程动作，才按顺序处理分支推送、主分支同步、Release／商店提交或正式网站部署；这些授权分别核对。同步仅 fetch／rebase，不使用 merge；不把“准备发布”当作授权。

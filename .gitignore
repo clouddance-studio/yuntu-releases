@@ -1,0 +1,11 @@
+/releases/
+/.local/
+__pycache__/
+*.pyc
+*.exe
+*.msi
+*.msix
+*.msixbundle
+*.msixupload
+*.pfx
+*.p12

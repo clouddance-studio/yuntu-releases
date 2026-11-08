@@ -1,0 +1,38 @@
+{
+  "status": "draft-not-for-submission",
+  "locale": "en-US",
+  "desiredProductName": "Yuntu Editor",
+  "tagline": "Build with AI. Review precisely. Generate your way.",
+  "shortDescription": "A visual UI workspace for AI-assisted design, precise review, and developer-controlled generation.",
+  "description": [
+    "Turn a product idea into an interface you can inspect and refine. Yuntu Editor brings local UI authoring, AI-assisted editing, targeted review, and structured developer handoff into one visual workspace.",
+    "Build pages with editable layers, text, images, buttons, and containers. Refine geometry and appearance, organize local assets, and check supported content in preview.",
+    "Connect a compatible external AI client to inspect and edit the real project. Follow changes in Yuntu, compare supported before-and-after views, and leave review comments on specific elements to guide the next revision.",
+    "Export versioned JSON and mappings for your development workflow. Enable the optional official Web exporter for its supported React and TypeScript output, or use a compatible generation program that fits your project. Application logic, services, and deployment remain part of your own development process.",
+    "The current beta centers on local Windows x64 projects. AI assistance requires a separately configured compatible client and model access; provider charges are separate. Preview and export support varies by content and target. Production accounts, subscriptions, hosted collaboration, and cloud project storage are not announced as available features."
+  ],
+  "features": [
+    "Create and refine local UI pages with editable layers, text, images, buttons, and containers.",
+    "Connect a compatible external AI client to inspect and edit the real project.",
+    "Attach precise review feedback to specific elements and inspect review history.",
+    "Preview supported page interactions and animation workflows.",
+    "Export versioned JSON, source mappings, and required resources for developer handoff.",
+    "Use a compatible generator, including the optional official Web exporter for supported content."
+  ],
+  "keywordSuggestions": ["UI design", "visual editor", "prototyping", "AI workflow", "design review", "developer tools"],
+  "categorySuggestion": "Developer tools",
+  "requiredFacts": {
+    "reservedProductName": null,
+    "storeProductId": null,
+    "publisherDisplayName": null,
+    "packageIdentity": null,
+    "confirmedWindowsRequirements": null,
+    "availableMarkets": null,
+    "pricing": null,
+    "publicStoreUrl": null,
+    "publicWebsiteUrl": null,
+    "supportContact": null,
+    "privacyPolicyUrl": null,
+    "licenseTerms": null
+  }
+}

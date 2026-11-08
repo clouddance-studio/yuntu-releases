@@ -2,7 +2,7 @@
   "format": "yuntu-release-readiness/1",
   "product": "Yuntu Editor",
   "updatedOn": "2026-11-08",
-  "state": "local-preparation-user-review-required",
+  "state": "github-prerelease-authorized-store-preparation-pending",
   "branch": "release/1.0.0-beta",
   "localMainBranch": "main",
   "observedRemoteMainBranch": "main",
@@ -32,19 +32,24 @@
     "docs/release/store-listing.en.json",
     "docs/release/screenshots.md",
     "docs/release/release-notes.template.md",
-    "docs/release/launch-handoff.md"
+    "docs/release/launch-handoff.md",
+    "docs/release/1.0.0-beta/README.md",
+    "docs/release/1.0.0-beta/release-manifest.json",
+    "docs/release/1.0.0-beta/SHA256SUMS.txt"
   ],
+  "archivedPackage": {"manifest": "docs/release/1.0.0-beta/release-manifest.json", "status": "identity-and-hashes-verified-installation-user-confirmed", "version": "1.0.0-beta"},
+  "authorizedRemoteScope": {"confirmedOn": "2026-11-08", "actions": ["push release/1.0.0-beta", "publish GitHub v1.0.0-beta prerelease assets"], "excluded": ["main integration", "Microsoft Store submission", "website deployment"]},
   "gates": [
-    {"id": "editor-acceptance", "status": "pending", "reason": "The other acceptance task is still running; no final sign-off has been supplied.", "evidence": null},
-    {"id": "frozen-identity-and-artifacts", "status": "pending", "reason": "Build and verify exactly 1.0.0-beta / beta / 1.0.0.0, then archive the approved original bytes in releases/1.0.0-beta/windows-x64/. Renaming beta.3 artifacts is insufficient.", "evidence": null},
+    {"id": "editor-acceptance", "status": "pending", "reason": "The release owner confirmed installation acceptance on 2026-11-08. Detailed functional acceptance for this exact build is not recorded here; packaging does not relabel previous candidate tests.", "evidence": null},
+    {"id": "frozen-identity-and-artifacts", "status": "pending", "reason": "The 1.0.0-beta EXE and matching build identity are verified and archived; see docs/release/1.0.0-beta/release-manifest.json. Final Store identity, MSIX package, and approval remain pending.", "evidence": null},
     {"id": "store-account-and-product", "status": "pending", "reason": "Company verification, reserved product name, product and publisher identities have not been confirmed complete.", "evidence": null},
     {"id": "msix-package-and-channel", "status": "pending", "reason": "The existing EXE packaging path is not proof of Store MSIX packaging and installation.", "evidence": null},
-    {"id": "requirements-install-and-upgrade", "status": "pending", "reason": "Confirm supported Windows and hardware requirements, clean install, upgrade and uninstall on the final package.", "evidence": null},
+    {"id": "requirements-install-and-upgrade", "status": "pending", "reason": "Installation acceptance was confirmed by the release owner on 2026-11-08. Detailed Windows/hardware coverage, upgrade, downgrade, and uninstall evidence have not been supplied.", "evidence": null},
     {"id": "domain-and-public-website", "status": "pending", "reason": "The user confirmed on 2026-11-08 that domain review is incomplete and publication must wait; DNS, HTTPS and live pages also need verification.", "evidence": null},
     {"id": "support-privacy-and-terms", "status": "pending", "reason": "Verify a support destination and release-specific privacy and usage terms; local website preview notices are insufficient.", "evidence": null},
     {"id": "skill-mcp-installed-client-pairing", "status": "pending", "reason": "Bridge 0.2.0 native API integration passed on an isolated 1.0.1-beta program. Final 1.0.0-beta installed-editor pairing, real external client/model, save/undo and restart reconnection remain pending.", "evidence": null},
     {"id": "distribution-rights-and-notices", "status": "pending", "reason": "Confirm application, connector, skill, SDK, font and media-tool distribution terms and the final notices.", "evidence": null},
     {"id": "listing-markets-and-real-assets", "status": "pending", "reason": "Review final English claims, pricing/markets, real screenshots, logos and certification instructions against accepted behavior.", "evidence": null},
-    {"id": "user-overall-review-and-publication-scope", "status": "pending", "reason": "Keep this branch separate from main; the user must review the complete result before authorizing any remote action.", "evidence": null}
+    {"id": "user-overall-review-and-publication-scope", "status": "pending", "reason": "User authorized the release branch push and normal GitHub beta publication on 2026-11-08, and will inspect the release before any later main-branch integration. Store submission and website deployment are not authorized.", "evidence": null}
   ]
 }

@@ -13,7 +13,7 @@ The following English preparation guides are now available locally. They must be
 - [Frequently asked questions](guides/faq.md).
 - [Prepare a support report](guides/support.md).
 
-The website domain is still under review, and no public download, Store listing, support inbox, or production legal URL is announced here. Public format specifications and editable examples remain separate follow-up work; none is represented by an empty placeholder.
+The [GitHub beta download](https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta) and its [release notes](release/1.0.0-beta/README.md) identify the installer and integration assets. The website domain is still under review, and no Store listing, support inbox, or production legal URL is announced here. Public format specifications and editable examples remain separate follow-up work; none is represented by an empty placeholder.
 
 ## Maintainer planning
 

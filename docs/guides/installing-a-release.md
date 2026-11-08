@@ -1,6 +1,6 @@
 # Installing and using a Yuntu Editor release
 
-**Preparation status:** no public installer or Microsoft Store link is provided yet. Final system requirements and package-specific instructions will be confirmed against the accepted release. The website is not yet available as a public installation or support endpoint.
+**GitHub beta:** the [1.0.0-beta release](https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta) provides the Windows x64 EXE installer. See its [release notes](../release/1.0.0-beta/README.md) for exact checksums, unsigned status, and owner-confirmed installation acceptance. Microsoft Store/MSIX and detailed requirements/upgrade coverage remain separate work. The website is not yet available as a public installation or support endpoint.
 
 This release is fixed at **1.0.0-beta**, channel **beta**, Windows file version **1.0.0.0**. An installer filename, an older internal beta, or the MCP bridge's component version is not a substitute for that accepted application identity.
 

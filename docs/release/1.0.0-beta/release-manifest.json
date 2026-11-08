@@ -1,0 +1,79 @@
+{
+  "format": "yuntu-github-prerelease-manifest/1",
+  "product": "Yuntu Editor",
+  "version": "1.0.0-beta",
+  "channel": "beta",
+  "windowsFileVersion": "1.0.0.0",
+  "platform": "windows-x64",
+  "tag": "v1.0.0-beta",
+  "branch": "release/1.0.0-beta",
+  "releaseUrl": "https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta",
+  "sourceCommit": "6f24c642e08ac6fb8feb7b7679d204a0c75d5880",
+  "buildIdentity": {
+    "channel": "beta",
+    "crateVersion": "0.1.0",
+    "format": "yuntu-editor-build-identity/1",
+    "identitySha256": "4d95546b6a9cf2c6b951e00d5ed96db65534fdb43d89ba26f8ed611824065a0a",
+    "product": "Yuntu Editor",
+    "profile": "release",
+    "target": "x86_64-pc-windows-gnullvm",
+    "version": "1.0.0-beta",
+    "windowsFileVersion": "1.0.0.0"
+  },
+  "executableSha256": "fec08db6eaaf9745c7f08f48f90af2c7e4afc4b7ea81324f7babead9e835d28c",
+  "installerSignature": "NotSigned",
+  "assets": [
+    {
+      "name": "Yuntu-Editor-1.0.0-beta-windows-x64-setup.exe",
+      "path": "releases/1.0.0-beta/windows-x64/Yuntu-Editor-1.0.0-beta-windows-x64-setup.exe",
+      "bytes": 115935744,
+      "sha256": "0066cdea9412ea01197fc311273ec9620324da704dae7522cb0a1e406509c850"
+    },
+    {
+      "name": "Yuntu-MCP-0.2.0.zip",
+      "path": "releases/1.0.0-beta/windows-x64/Yuntu-MCP-0.2.0.zip",
+      "bytes": 20730,
+      "sha256": "c3e2d6c88a6bbc0b13d20e6f90fdc33da52d9e2fc1ec3ecc12908f25ee973c9a"
+    },
+    {
+      "name": "Yuntu-Skill-1.0.0-beta.zip",
+      "path": "releases/1.0.0-beta/windows-x64/Yuntu-Skill-1.0.0-beta.zip",
+      "bytes": 2847,
+      "sha256": "9420b08c00211398a1e9450a45af347dc08a8032f6c87a71a2ffbabee885015c"
+    }
+  ],
+  "packagingEvidence": {
+    "package-report.json": {
+      "bytes": 949514,
+      "sha256": "d44f44f49e3c941803de1636882c92fc8f1b8b7d651e80b23c0bb59305e1ad8e"
+    },
+    "payload-manifest.json": {
+      "bytes": 210739,
+      "sha256": "d0d4de23be4a548868c41178dc73c3906135ccf57041df246581d536931d8fd6"
+    }
+  },
+  "payloadVerification": {
+    "stagedFilesVerified": 1060,
+    "stagedBytesVerified": 404753888,
+    "archivedNoticeFiles": 878
+  },
+  "installationAcceptance": {
+    "status": "user-confirmed",
+    "confirmedOn": "2026-11-08",
+    "scope": "Release owner confirmed installation acceptance; detailed device/case coverage was not supplied."
+  },
+  "integration": {
+    "separateBridgeVersion": "0.2.0",
+    "bundledBridgeVersion": "0.1.0",
+    "bundledBridgeSha256": "63d65db75d523d3920f3afed9f0146115d14b31312eed6a05987882d7b4ccf2b",
+    "bundledHelperSha256": "175aa4e36b5b4b5261d1109f9d27d25fab0a2ecf240d05aa2df84aebf1cee35c",
+    "protocolTestsPassed": 51,
+    "preparationTestsPassed": 17,
+    "historicalNativeIntegrationVersion": "1.0.1-beta",
+    "historicalNativeIntegrationChecksPassed": 11,
+    "finalExternalClientModelPairing": "not-verified"
+  },
+  "publicationScope": "User authorized GitHub beta release and branch push; no main-branch integration, Store submission, or website deployment.",
+  "storeReadiness": "pending; this EXE is not a verified MSIX submission",
+  "fullEditorAndTargetTests": "Not rerun for this packaging; historical results keep their original identities."
+}

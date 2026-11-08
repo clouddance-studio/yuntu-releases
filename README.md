@@ -6,7 +6,7 @@ Yuntu Editor is a visual UI workspace for Windows that connects product ideas, d
 
 Connect an external AI client, see changes in the editor, attach review comments to specific elements, and use structured JSON with a generator that fits your project.
 
-> **Release preparation:** The first public release is fixed at **1.0.0-beta**. Final acceptance and release-channel checks are in progress. This repository does not yet provide an editor installer or a Microsoft Store download link. The company website domain is still under review. The capabilities below describe the current development beta, not a published release.
+> **Windows beta:** The first public release is **1.0.0-beta**. Further compatibility and release-channel checks remain in progress. The [GitHub beta release](https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta) provides a Windows x64 installer and separate MCP/Skill bundles. Installation acceptance was confirmed by the release owner; a Microsoft Store download is not available. The company website domain is still under review. The capabilities below describe the Windows beta; see its release notes for verification scope and limitations.
 
 ## From an idea to an implementation
 
@@ -55,7 +55,7 @@ The official Web exporter produces React / TypeScript output for a supported sub
 
 - **Windows x64 is the current validation target.** macOS and browser-based editor support remain future work.
 - **Preview and export coverage varies.** Some controls, effects, media features, and document combinations are not supported by every preview or generator. Unsupported project content is reported during export; complete visual or behavioral parity across targets is not guaranteed.
-- **Export coverage is still expanding.** Current JSON export includes supported pages, local static component projects, and a limited page-plus-animation workflow. It does not yet cover every project document type. Complete official Android and iOS generators are outside the current first-release scope.
+- **Export coverage is still expanding.** Current JSON export includes supported pages, local static component projects, and a limited page-plus-animation workflow. It does not yet cover every project document type. The installer includes official Web, WeChat Mini Program, Android, and iOS exporter packages; cross-target build, runtime, and visual acceptance remain separate checks.
 - **Media preview has limits.** Some supported video previews are silent, and exported captions may not appear in the editor's playback view.
 - **Online services are still in preparation.** Production account services, subscriptions, online feedback submission, and trusted update delivery are not presented here as available features. The current workflow centers on local projects; hosted team collaboration and cloud project storage are outside this beta's scope.
 
@@ -65,7 +65,7 @@ This is a development beta. Wider device testing, external AI workflow testing, 
 
 Microsoft Store is the planned primary channel for Windows installation and updates. A verified Store link, system requirements, and installation instructions will be added when a public release is ready.
 
-English is the primary language for this repository and its release materials. Read the [installation and Release usage guide](docs/guides/installing-a-release.md), [first-project walkthrough](docs/guides/getting-started.md), [Skill and MCP setup](docs/guides/ai-mcp.md), and [FAQ](docs/guides/faq.md). These are preparation materials awaiting final package verification. Real release screenshots, editable examples, public JSON specifications, and generator tutorials remain follow-up work. See the [documentation index](docs/README.md) and [release preparation entry](docs/release/README.md).
+English is the primary language for this repository and its release materials. Read the [installation and Release usage guide](docs/guides/installing-a-release.md), [first-project walkthrough](docs/guides/getting-started.md), [Skill and MCP setup](docs/guides/ai-mcp.md), and [FAQ](docs/guides/faq.md). See the [1.0.0-beta release notes](docs/release/1.0.0-beta/README.md) for the exact installer identity, signing state, checksums, and verification limits. Real release screenshots, editable examples, public JSON specifications, and generator tutorials remain follow-up work. See the [documentation index](docs/README.md) and [release preparation entry](docs/release/README.md).
 
 ## About this repository and licensing
 

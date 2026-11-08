@@ -1,6 +1,6 @@
 # Set up the Yuntu Editor Skill and MCP connection
 
-These files are prepared locally for review. They have not been published as an editor release, a package-manager package, or a plugin-store listing. Final compatibility with the accepted installed editor remains a release gate. The website domain is still under review; setup does not depend on it.
+The [1.0.0-beta GitHub release](https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta) provides separate MCP 0.2.0 and user Skill ZIP assets; no package-manager or plugin-store listing is provided. Final compatibility with the accepted installed editor remains a release gate. The website domain is still under review; setup does not depend on it.
 
 ## What each component does
 
@@ -81,7 +81,7 @@ The editor's native API and the MCP bridge have separate allowlists. A method mu
 
 The output tool uses the native editor's output-task handlers and their existing session, CAS, draft/UI, path, and publication guards. It does not fall back from an author command, run generators, or expose arbitrary methods. Global `project.export.cancel` is intentionally absent because that native operation does not identify which job to cancel. See [the complete validation, preview, and export workflow](mcp-validation-preview-export.md) for parameters, polling, completion evidence, and cancellation boundaries.
 
-The bridge's `serverInfo.version` is now 0.2.0, a component identifier separate from the application. The accepted release must identify as `1.0.0-beta`; the available `1.0.1-beta` editor used for native integration verification is not that release and cannot be relabeled as accepted.
+The separate bridge's `serverInfo.version` is 0.2.0. The installer has its own 0.1.0 bridge snapshot with different hashes and tools. For this four-tool guide, configure the extracted 0.2.0 scripts together; do not mix the two bundles. The newly archived application reports `1.0.0-beta`. The historical native integration run used `1.0.1-beta`, so final installed-client/model pairing remains a separate check.
 
 ## Restart and connection failures
 

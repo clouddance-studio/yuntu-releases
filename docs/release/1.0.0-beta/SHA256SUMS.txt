@@ -1,0 +1,3 @@
+0066cdea9412ea01197fc311273ec9620324da704dae7522cb0a1e406509c850  Yuntu-Editor-1.0.0-beta-windows-x64-setup.exe
+c3e2d6c88a6bbc0b13d20e6f90fdc33da52d9e2fc1ec3ecc12908f25ee973c9a  Yuntu-MCP-0.2.0.zip
+9420b08c00211398a1e9450a45af347dc08a8032f6c87a71a2ffbabee885015c  Yuntu-Skill-1.0.0-beta.zip

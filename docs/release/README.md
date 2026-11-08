@@ -1,6 +1,6 @@
 # Yuntu Editor release preparation
 
-This is a local preparation branch, not a published release. The website domain has not completed review, final editor acceptance is still in progress, and no public download or Store URL is available here.
+This branch contains the [1.0.0-beta GitHub prerelease](1.0.0-beta/README.md), its exact [manifest](1.0.0-beta/release-manifest.json) and [checksums](1.0.0-beta/SHA256SUMS.txt). The owner confirmed installation acceptance and authorized this branch push and GitHub publication. Keep `main` unchanged until the owner reviews the result. Website and Store readiness remain separate pending work.
 
 ## Review this branch
 
@@ -38,7 +38,7 @@ python -B scripts/check_preparation.py --require-ready --editor-identity '..\rus
 
 This must fail while any release gate remains pending. None of these commands builds the editor, modifies a running editor, copies a final package, changes client configuration, or publishes anything.
 
-`--build-identity` must contain the actual release executable's `--release-info` JSON, not a copy of `packaging/release.json`. It must identify a release-profile Yuntu Editor at `1.0.0-beta / beta / 1.0.0.0`. Use a deliberate, verified executable path and save its output as UTF-8 without BOM. The current integration-test program reports `1.0.1-beta`; it is rejected as the target even though the source configuration matches. This guard does not certify the installer or turn a metadata file into package acceptance.
+`--build-identity` must contain the actual release executable's `--release-info` JSON, not a copy of `packaging/release.json`. It must identify a release-profile Yuntu Editor at `1.0.0-beta / beta / 1.0.0.0`. Use a deliberate, verified executable path and save its output as UTF-8 without BOM. The historical integration-test program reports `1.0.1-beta` and is rejected as the target. The newly archived, hash-matched build reports the correct `1.0.0-beta`; its captured identity is under the local archive as `build-identity.json`. This guard does not certify the installer or turn a metadata file into package acceptance.
 
 The optional `scripts/verify_mcp_native.py --info <explicit-private-file> --workspace <new-.local-test-directory>` creates a tiny project in a separately launched, isolated editor. It rejects nonempty editor workspaces and existing case projects. It validates, snapshots, renders, configures/captures/writes/reuses standard JSON, checks every package hash, tests conflicts and path refusals, and preserves the saved author. It is not run by ordinary unit-test discovery. Read its captured actual editor identity before using its results; native API integration is not final release or external-model acceptance.
 

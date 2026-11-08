@@ -1,6 +1,23 @@
 # Screenshot and demo capture plan
 
-These are capture instructions and English caption drafts, not delivered screenshots. Use the final accepted installed build, its English interface, a clean test profile, and an original sample project with known asset rights. Do not submit the website's concept illustrations as real editor screenshots.
+The listing plan below remains a preparation document. Two real product screenshots are now available for the repository README; their exact scope is recorded below. Use the final accepted installed build, its English interface, a clean test profile, and an original sample project with known asset rights. Do not submit the website's concept illustrations as real editor screenshots.
+
+## Repository README captures — November 8, 2026
+
+Captured from the actual `1.0.0-beta / beta / 1.0.0.0` release-profile executable in the packaging stage. Its executable SHA-256 is `fec08db6eaaf9745c7f08f48f90af2c7e4afc4b7ea81324f7babead9e835d28c`, matching the installer payload report. The images are original, unretouched window captures at **1603 × 853** pixels, using the English interface and an isolated profile.
+
+- [Design workspace](../assets/yuntu-editor-design.jpg): the original `atlas-workspace` sample dashboard, its editable layers, and the artboard property inspector.
+- [AI workspace](../assets/yuntu-editor-ai.jpg): the same saved page alongside actual MCP-driven command changes and receipts. This is not a simulated chat or proof of external-client/model acceptance.
+- [Product icon](../assets/yuntu-icon.png): the existing Yuntu product icon, copied unchanged from the packaged application's matching source assets.
+- [Download artwork](../assets/download-windows.svg): a repository-native SVG link treatment for the verified Windows x64 installer.
+
+The sample was authored through the local MCP connection: 302 public page operations, three admitted apply batches, a real save, and document validation with no diagnostics. Team/member statistics are fictional dashboard content, not editor account or cloud-collaboration claims. No credentials, user projects, private paths, or unrelated windows are shown. The isolated demo editor was closed through its normal quit API.
+
+`yuntu-editor-design.jpg` SHA-256: `7bf4917409297177057340347ab4f99db5af6023dee44521a96e4f0362331d91`.
+
+`yuntu-editor-ai.jpg` SHA-256: `dfeffaf9865921f486aec0b21dffcdf006426981d6be3aa338f31ab42fc88bbc`.
+
+These README captures are not a completed Microsoft Store screenshot submission; the remaining listing scenes and requirements below still need their own acceptance.
 
 | Order | Scene | English caption draft | Required evidence |
 | --- | --- | --- | --- |

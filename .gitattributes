@@ -1,2 +1,7 @@
 # Connector provenance hashes describe the original bytes across checkouts.
 /integrations/mcp/*.py -text
+
+# This is a release/documentation repository; helper scripts are not app source.
+/scripts/** -linguist-detectable
+/integrations/mcp/** -linguist-detectable
+/docs/** linguist-documentation

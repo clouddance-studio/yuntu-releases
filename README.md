@@ -1,74 +1,74 @@
-# Yuntu Editor
+<div align="center">
+
+<h1><img src="docs/assets/yuntu-icon.png" width="40" height="40" alt="Yuntu Editor icon" /> Yuntu Editor</h1>
 
 **Build with AI. Review precisely. Generate your way.**
 
-Yuntu Editor is a visual UI workspace for Windows that connects product ideas, design, AI-assisted editing, review, and code generation around the same local project. It is built for independent developers and small teams who want to refine an interface visually and bring the result into their own development workflow.
+A visual UI workspace for Windows, built with Rust.
 
-Connect an external AI client, see changes in the editor, attach review comments to specific elements, and use structured JSON with a generator that fits your project.
+[![Download Yuntu Editor for Windows x64 — 1.0.0-beta](docs/assets/download-windows.svg)](https://github.com/clouddance-studio/yuntu-releases/releases/download/v1.0.0-beta/Yuntu-Editor-1.0.0-beta-windows-x64-setup.exe)
 
-> **Windows beta:** The first public release is **1.0.0-beta**. Further compatibility and release-channel checks remain in progress. The [GitHub beta release](https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta) provides a Windows x64 installer and separate MCP/Skill bundles. Installation acceptance was confirmed by the release owner; a Microsoft Store download is not available. The company website domain is still under review. The capabilities below describe the Windows beta; see its release notes for verification scope and limitations.
+**1.0.0-beta** · Windows x64 · 111 MiB installer
 
-## From an idea to an implementation
+[Release notes](docs/release/1.0.0-beta/README.md) · [Installation guide](docs/guides/installing-a-release.md) · [SHA-256 checksums](https://github.com/clouddance-studio/yuntu-releases/releases/download/v1.0.0-beta/SHA256SUMS.txt)
 
-1. **Design the interface.** Build pages, arrange elements, add local assets, and create prototypes for supported interactions.
-2. **Work with AI.** Use a connected external AI client to inspect and edit the project while viewing the results in Yuntu.
-3. **Review specific elements.** Keep feedback attached to its target, guide the next revision, and compare the changes.
-4. **Show the process.** Preview supported interactions, create animations, and export supported animation or recording workflows to video.
-5. **Generate for your project.** Export versioned JSON and mappings, then use an optional official Web exporter or your own generation program.
+</div>
 
-## What the current beta supports
+![Yuntu Editor 1.0.0-beta in English: an editable dashboard, its layers, and visual properties](docs/assets/yuntu-editor-design.jpg)
 
-| Area | Current capabilities |
+*An original sample dashboard in the actual Yuntu Editor 1.0.0-beta design workspace.*
+
+## From an idea to a working interface
+
+Design locally, connect your own AI client, and refine the result in the same project. Yuntu brings visual editing, object-specific review, previews, and structured developer handoff into one workspace.
+
+| Design visually | Work with AI | Hand off your way |
+| --- | --- | --- |
+| Arrange pages, text, images, and containers. Refine geometry, layout, fonts, and appearance with editable layers. | Connect an external MCP client. Inspect supported changes, compare results, and selectively undo edits. | Export versioned JSON, source mappings, and assets. Use an official exporter or register your own generator. |
+
+## See what AI changed
+
+![The actual Yuntu AI workspace showing the same dashboard and recorded MCP command receipts](docs/assets/yuntu-editor-ai.jpg)
+
+Keep the result visible while your external client works. Supported command changes and their receipts stay beside the page for inspection. The screenshot shows real MCP-driven edits to the sample project; it does not depict a built-in chat or an external-model acceptance test.
+
+[Set up the Skill and MCP connection →](docs/guides/ai-mcp.md)
+
+## Get started
+
+1. **[Download the Windows installer](https://github.com/clouddance-studio/yuntu-releases/releases/download/v1.0.0-beta/Yuntu-Editor-1.0.0-beta-windows-x64-setup.exe)** and follow the [installation guide](docs/guides/installing-a-release.md).
+2. **[Create your first project](docs/guides/getting-started.md).** Your editable `.yt` documents, `.thme` themes, manifests, and assets stay in local project directories.
+3. **[Connect an AI client](docs/guides/ai-mcp.md)** if you want AI-assisted editing. Client software and model access are separate requirements.
+4. **[Validate, preview, and export](docs/guides/mcp-validation-preview-export.md)** the intended revision, then verify the completed output.
+
+### Optional AI integration downloads
+
+| Download | What it contains |
 | --- | --- |
-| Visual editing | Pages with text, buttons, images, and containers; layout and geometry controls; layers, selection, rulers, and guides. |
-| Local projects | Project navigation, page thumbnails, local assets organized into directories, asset specifications, and automatic saving with recovery support. |
-| Prototypes and preview | Prototype components and navigation, screenshot overlays, and previews of supported page interactions. Preview behavior depends on the controls and actions configured. |
-| AI-assisted editing | External MCP connections, visual before-and-after comparisons, command details, and selective undo for supported changes. A separate observation window can show the work while you use your AI client. |
-| Precise review | Comments associated with specific objects, review rounds, object navigation, and read-only review history. |
-| Appearance | Fonts, styles, project theme settings, and supported visual effects, including shadows, glows, and layer blur. Support varies by document type and export target. |
-| Animation and video | Keyframe animation for position and opacity, animation preview, and MP4 export for supported saved animations and editor recordings. |
-| Developer handoff | Versioned JSON export packages, source mappings, project-level and global generator registration, and an optional React / TypeScript Web exporter. |
+| [MCP bridge 0.2.0](https://github.com/clouddance-studio/yuntu-releases/releases/download/v1.0.0-beta/Yuntu-MCP-0.2.0.zip) | Four-tool stdio bridge, sibling API helper, provenance, and protocol tests. Python is required separately. |
+| [Yuntu Editor Skill](https://github.com/clouddance-studio/yuntu-releases/releases/download/v1.0.0-beta/Yuntu-Skill-1.0.0-beta.zip) | User-facing instructions for supported design, review, and export workflows. |
 
-The editor includes an English interface and light and dark themes.
+The installer includes its own bridge snapshot. To use the separate 0.2.0 four-tool bundle, follow the [setup instructions](docs/guides/ai-mcp.md) and keep its two Python scripts together.
 
-## AI stays connected to the real project
+<details>
+<summary><strong>Beta scope, installation, and compatibility</strong></summary>
 
-AI conversations take place in your connected external client. Yuntu provides MCP access to supported editor operations and shows their effects on the project. You can inspect command changes, compare earlier and later states, and selectively undo supported edits.
+This is a **Windows x64 prerelease**. Installation acceptance was confirmed by the release owner. The installer is unsigned; review its [exact identity, signing state, known issues, and verification limits](docs/release/1.0.0-beta/README.md) and compare the published checksum before use. Back up important projects before beta upgrades.
 
-A compatible external client, connection setup, and access to an AI model are required for AI-assisted workflows. Model access and any provider charges are handled separately from the editor.
+- Preview, media, animation, and export coverage varies by document, control, effect, and target. Supported animation and recording workflows can export video; some video previews are silent.
+- JSON is Yuntu's versioned exchange format. The installer includes official Web, WeChat Mini Program, Android, and iOS exporter packages. Generated output needs integration with application logic and validation in its target environment.
+- The optional official Web exporter produces React / TypeScript for a supported subset. Format, bridge, and generator versions are independent of the application version.
+- Production account services, subscriptions, hosted collaboration, cloud project storage, and trusted automatic updates are not presented as available beta features. Team-related text in the sample dashboard is demo content.
+- Microsoft Store/MSIX and the company website remain separate preparation work. No verified Store installation link is announced here.
 
-Review comments provide specific context for the next revision. Object navigation and review history help you check whether a change addresses the feedback.
+</details>
 
-## Use your own generation workflow
+## Documentation
 
-Yuntu separates editable project documents from the JSON packages used for developer handoff:
+[Installation](docs/guides/installing-a-release.md) · [First project](docs/guides/getting-started.md) · [AI setup](docs/guides/ai-mcp.md) · [Validation and export](docs/guides/mcp-validation-preview-export.md) · [FAQ](docs/guides/faq.md) · [Support reports](docs/guides/support.md)
 
-- **Editable documents:** `.yt` files hold authoring content; standalone themes use `.thme` files.
-- **Export packages:** Versioned JSON describes supported UI content, source mappings, and required assets for downstream tools.
-- **Generation programs:** Register a generator for one project or for reuse across projects, configure it, and explicitly run it against the exported input.
+## About this repository
 
-The JSON format is Yuntu's own versioned exchange format. The current implementation supports multiple format versions, and the selected version determines which content can be exported. The JSON export works independently of the optional official Web exporter.
+Maintained by **Cloud Dance**. This repository provides Yuntu Editor release information, documentation, and the external integration bundle. The Rust desktop application source is maintained separately; GitHub's automatic source ZIP is not the editor installer.
 
-The official Web exporter produces React / TypeScript output for a supported subset of UI content. Your own generator can target another framework or component system, subject to the information available in the export format. Generated output still needs integration with your application's business logic and validation in its target environment.
-
-## Current scope and limitations
-
-- **Windows x64 is the current validation target.** macOS and browser-based editor support remain future work.
-- **Preview and export coverage varies.** Some controls, effects, media features, and document combinations are not supported by every preview or generator. Unsupported project content is reported during export; complete visual or behavioral parity across targets is not guaranteed.
-- **Export coverage is still expanding.** Current JSON export includes supported pages, local static component projects, and a limited page-plus-animation workflow. It does not yet cover every project document type. The installer includes official Web, WeChat Mini Program, Android, and iOS exporter packages; cross-target build, runtime, and visual acceptance remain separate checks.
-- **Media preview has limits.** Some supported video previews are silent, and exported captions may not appear in the editor's playback view.
-- **Online services are still in preparation.** Production account services, subscriptions, online feedback submission, and trusted update delivery are not presented here as available features. The current workflow centers on local projects; hosted team collaboration and cloud project storage are outside this beta's scope.
-
-This is a development beta. Wider device testing, external AI workflow testing, and release validation are ongoing.
-
-## Downloads and documentation
-
-Microsoft Store is the planned primary channel for Windows installation and updates. A verified Store link, system requirements, and installation instructions will be added when a public release is ready.
-
-English is the primary language for this repository and its release materials. Read the [installation and Release usage guide](docs/guides/installing-a-release.md), [first-project walkthrough](docs/guides/getting-started.md), [Skill and MCP setup](docs/guides/ai-mcp.md), and [FAQ](docs/guides/faq.md). See the [1.0.0-beta release notes](docs/release/1.0.0-beta/README.md) for the exact installer identity, signing state, checksums, and verification limits. Real release screenshots, editable examples, public JSON specifications, and generator tutorials remain follow-up work. See the [documentation index](docs/README.md) and [release preparation entry](docs/release/README.md).
-
-## About this repository and licensing
-
-This repository is intended for Yuntu Editor release information, documentation, and distributable examples. The editor's application source code is maintained separately.
-
-Editor usage terms and reuse permissions for examples and generators will be provided with their respective releases. Third-party components retain their own licenses.
+Editor usage terms and reuse permissions are provided with their respective materials. Third-party components retain their own licenses. See the [release record](docs/release/1.0.0-beta/README.md), [documentation index](docs/README.md), and [capture provenance](docs/release/screenshots.md).

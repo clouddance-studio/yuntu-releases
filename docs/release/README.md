@@ -1,10 +1,10 @@
 # Yuntu Editor release preparation
 
-This branch contains the [1.0.0-beta GitHub prerelease](1.0.0-beta/README.md), its exact [manifest](1.0.0-beta/release-manifest.json) and [checksums](1.0.0-beta/SHA256SUMS.txt). The owner confirmed installation acceptance and authorized this branch push and GitHub publication. Keep `main` unchanged until the owner reviews the result. Website and Store readiness remain separate pending work.
+The [1.0.0-beta GitHub prerelease](1.0.0-beta/README.md) is published, with its exact [manifest](1.0.0-beta/release-manifest.json) and [checksums](1.0.0-beta/SHA256SUMS.txt). The owner confirmed installation acceptance and approved integration into `main`; the reviewed release materials and download homepage are now on `main`. Website and Store readiness remain separate pending work.
 
-## Review this branch
+## Release identity and future changes
 
-The user fixed this release at **1.0.0-beta**, channel **beta**, Windows file version **1.0.0.0**, on branch `release/1.0.0-beta`. Do not substitute an internal Beta.3 package, merely rename an old installer, or change the version automatically. The user confirmed that the main branch remains `main`; do not merge into it, push this branch, publish a GitHub Release, upload assets, or submit to Microsoft Store until the user has reviewed the complete result and explicitly authorized the relevant action. The final accepted build and artifacts still need to be verified against this fixed target.
+The published release is fixed at **1.0.0-beta**, channel **beta**, Windows file version **1.0.0.0**. Its release branch is `release/1.0.0-beta`, and its tag is `v1.0.0-beta`. The original installer and matching build identity have been verified and archived. Keep published artifact bytes and their recorded identities intact. Future pushes, releases, attachment changes, and Store submissions require the corresponding explicit user authorization; the completed publication does not authorize later work automatically.
 
 Start with these materials:
 

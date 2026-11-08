@@ -20,7 +20,7 @@ A visual UI workspace for Windows, built with Rust.
 
 ## From an idea to a working interface
 
-Design locally, connect your own AI client, and refine the result in the same project. Yuntu brings visual editing, object-specific review, previews, and structured developer handoff into one workspace.
+See what AI changed, refine it visually, and export the result for your own development workflow. Yuntu brings local visual editing, object-specific review, previews, and structured handoff into one workspace.
 
 | Design visually | Work with AI | Hand off your way |
 | --- | --- | --- |
@@ -30,7 +30,7 @@ Design locally, connect your own AI client, and refine the result in the same pr
 
 ![The actual Yuntu AI workspace showing the same dashboard and recorded MCP command receipts](docs/assets/yuntu-editor-ai.jpg)
 
-Keep the result visible while your external client works. Supported command changes and their receipts stay beside the page for inspection. The screenshot shows real MCP-driven edits to the sample project; it does not depict a built-in chat or an external-model acceptance test.
+Keep the result visible while your external client works. Inspect supported before-and-after changes and command receipts beside the page. This sample was edited through MCP; the screenshot shows its recorded changes in the AI workspace.
 
 [Set up the Skill and MCP connection →](docs/guides/ai-mcp.md)
 

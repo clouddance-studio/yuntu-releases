@@ -1,10 +1,10 @@
 # Yuntu Editor documentation
 
-This repository is being prepared as the public home for Yuntu Editor product information, user guides, examples, and release notes. It primarily serves English-speaking markets, with English as the default language for public content.
+This repository provides Yuntu Editor downloads, product information, user guides, and release notes. English is the primary language for public content.
 
-Microsoft Store is the planned primary channel for Windows installation and updates. Download links and release-specific guides will be added when the corresponding release is ready.
+The [1.0.0-beta GitHub prerelease](https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta) provides the Windows x64 installer and separate MCP/Skill bundles. Microsoft Store remains a planned channel; no verified Store link is available yet.
 
-The following English preparation guides are now available locally. They must be checked against the final accepted release before publication:
+Start with these English guides. Package-specific requirements, signing state, known issues, and verification limits are recorded in the [release notes](release/1.0.0-beta/README.md):
 
 - [Install and use a release](guides/installing-a-release.md).
 - [Create your first project](guides/getting-started.md).

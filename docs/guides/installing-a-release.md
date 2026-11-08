@@ -6,9 +6,9 @@ This release is fixed at **1.0.0-beta**, channel **beta**, Windows file version 
 
 ## Choose the correct download
 
-The planned primary channel is Microsoft Store, using a Windows x64 MSIX package. When a verified listing is available, check the product name, publisher, architecture, supported Windows version, and release channel before installing.
+For 1.0.0-beta, download the Windows x64 EXE from the [GitHub release](https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta). Check the exact filename and SHA-256 against its release record.
 
-If a separately distributed installer is offered later, obtain it from the exact link in the corresponding release notes. A beta release is a prerelease. Do not infer stability from a filename or choose a similarly named product from an unverified publisher.
+Microsoft Store/MSIX remains a planned channel. When a verified listing becomes available, check its publisher, architecture, supported Windows version, and release channel. The current GitHub beta is a prerelease, and its EXE does not provide Store-managed updates.
 
 A GitHub Release's automatically generated **Source code** ZIP or tarball contains this documentation repository. It is not an editor installer. Skill and MCP files also do not contain the editor application or provide model access.
 

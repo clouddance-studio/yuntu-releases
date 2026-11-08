@@ -1,6 +1,6 @@
 # Your first Yuntu Editor project
 
-This walkthrough describes the current beta workflow. Run it against the final accepted release before treating it as a release-specific installation test. Windows x64 is the current validation target; confirmed system requirements belong in the release notes.
+Start with the [1.0.0-beta Windows x64 release](../release/1.0.0-beta/README.md). This walkthrough covers a small local editing workflow; check the release notes for package requirements, known issues, and verification limits.
 
 1. Install the verified release using [its installation instructions](installing-a-release.md), then check its version in About.
 2. Create a local project in a directory you control. Use its add-page action if it does not already have an initial page.

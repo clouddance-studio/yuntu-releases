@@ -2,7 +2,7 @@
 
 ## Is this already a public release?
 
-No public installer or Store listing is announced by these preparation materials. Final editor acceptance and channel preparation are separate tasks. The company website domain is still under review.
+Yes. [Yuntu Editor 1.0.0-beta is available on GitHub](https://github.com/clouddance-studio/yuntu-releases/releases/tag/v1.0.0-beta) as a Windows x64 prerelease. Installation acceptance was confirmed by the release owner. Microsoft Store is not yet available, and the company website domain is still under review. See the [release notes](../release/1.0.0-beta/README.md) for checksums, the unsigned installer, known issues, and verification limits.
 
 ## Which platform is supported?
 
@@ -24,7 +24,7 @@ Production account services, subscriptions, cloud project storage, and hosted te
 
 ## Does JSON export generate my whole application?
 
-Standard JSON is a versioned UI handoff. The optional official Web exporter supports a subset of content; another generator can target a different development workflow. Application data, services, business logic, and deployment still need integration and testing. Complete official Android and iOS generators are outside the current first-release scope.
+Standard JSON is a versioned UI handoff. The installer includes official Web, WeChat Mini Program, Android, and iOS exporter packages; support varies by format, content, and target. The optional Web exporter produces React / TypeScript for a supported subset. Application data, services, business logic, deployment, and target-specific validation still belong in your development workflow.
 
 ## Are history and recovery a backup?
 
@@ -36,4 +36,4 @@ No. A future Store MSIX release and a separately downloaded EXE have different u
 
 ## Where do I report a problem?
 
-Use [Support](support.md) to prepare a minimal, sanitized report. A verified direct support endpoint will be supplied with the actual release; none is invented from the company domain.
+Use [Support](support.md) to prepare a minimal, sanitized report. A verified direct support endpoint has not yet been announced; the published beta does not establish a working support inbox or website service.

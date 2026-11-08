@@ -2,7 +2,7 @@
 import copy
 import json
 import unittest
-from check_preparation import ROOT, validate_readiness
+from check_preparation import ROOT, validate_readiness, identity_mismatches
 
 
 class ReadinessTests(unittest.TestCase):
@@ -31,6 +31,20 @@ class ReadinessTests(unittest.TestCase):
         self.assertEqual(pending, [])
         self.assertIn("Final accepted identity is not recorded", errors)
         self.assertIn("No final approved artifacts are recorded", errors)
+
+    def test_beta_three_cannot_be_used_as_the_fixed_first_beta(self):
+        self.record["finalIdentity"] = {"version": "1.0.0-beta.3", "channel": "beta", "windowsFileVersion": "1.0.0.3"}
+        errors, _ = validate_readiness(self.record)
+        self.assertTrue(any("user-fixed release version" in error for error in errors))
+        self.assertTrue(any("user-fixed release windowsFileVersion" in error for error in errors))
+
+    def test_branch_and_editor_identity_must_match_the_fixed_target(self):
+        self.record["branch"] = "release/1.0.0-beta.3"
+        self.assertTrue(any("branch does not match" in error for error in validate_readiness(self.record)[0]))
+        target = self.record["releaseTarget"]
+        self.assertEqual(identity_mismatches(dict(target), target, "Editor"), [])
+        wrong = dict(target, version="1.0.0")
+        self.assertTrue(identity_mismatches(wrong, target, "Editor"))
 
 
 if __name__ == "__main__":

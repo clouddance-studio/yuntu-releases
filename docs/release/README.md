@@ -4,7 +4,7 @@ This is a local preparation branch, not a published release. The website domain 
 
 ## Review this branch
 
-The branch is `release/1.0.0-beta.3`, based on the currently observed product identity. The user confirmed that the main branch remains `main`; do not merge into it, push this branch, publish a GitHub Release, upload assets, or submit to Microsoft Store until the user has reviewed the complete result and explicitly authorized the relevant action. The branch name does not freeze the final application version.
+The user fixed this release at **1.0.0-beta**, channel **beta**, Windows file version **1.0.0.0**, on branch `release/1.0.0-beta`. Do not substitute an internal Beta.3 package, merely rename an old installer, or change the version automatically. The user confirmed that the main branch remains `main`; do not merge into it, push this branch, publish a GitHub Release, upload assets, or submit to Microsoft Store until the user has reviewed the complete result and explicitly authorized the relevant action. The final accepted build and artifacts still need to be verified against this fixed target.
 
 Start with these materials:
 
@@ -30,13 +30,13 @@ python -B integrations/mcp/test-editor-mcp.py
 The first command checks the preparation files, local links, English copy, and bundled bridge identities. It reports pending release gates while allowing valid preparation work to pass. To require a complete release record:
 
 ```powershell
-python -B scripts/check_preparation.py --require-ready
+python -B scripts/check_preparation.py --require-ready --editor-identity '..\rust-ui-editor\packaging\release.json'
 ```
 
 This must fail while any release gate remains pending. None of these commands builds the editor, modifies a running editor, copies a final package, changes client configuration, or publishes anything.
 
 ## Artifact handoff
 
-After final acceptance and an actual packaging task, archive the exact approved files under `releases/<product-version>/windows-x64/` in this repository. This directory is ignored by Git. Do not create empty release directories or substitute a development executable for a verified installer.
+After final acceptance and an actual packaging task, archive the exact approved files under `releases/1.0.0-beta/windows-x64/` in this repository. This directory is ignored by Git. Do not create empty release directories or substitute a development executable for a verified installer.
 
 Keep the installer or Store submission package, checksums, English notes, third-party notices, and a release record identifying the editor source commit, build identity, package identity, validation evidence, and every distributed file. GitHub's automatically generated source archive is the documentation repository, not an editor installer.

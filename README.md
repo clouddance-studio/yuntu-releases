@@ -6,7 +6,7 @@ Yuntu Editor is a visual UI workspace for Windows that connects product ideas, d
 
 Connect an external AI client, see changes in the editor, attach review comments to specific elements, and use structured JSON with a generator that fits your project.
 
-> **Release preparation:** Final acceptance and release-channel checks are in progress. This repository does not yet provide an editor installer or a Microsoft Store download link. The company website domain is still under review. The capabilities below describe the current development beta, not a published release.
+> **Release preparation:** The first public release is fixed at **1.0.0-beta**. Final acceptance and release-channel checks are in progress. This repository does not yet provide an editor installer or a Microsoft Store download link. The company website domain is still under review. The capabilities below describe the current development beta, not a published release.
 
 ## From an idea to an implementation
 

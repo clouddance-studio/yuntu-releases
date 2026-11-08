@@ -28,6 +28,13 @@ def validate_readiness(record, require_ready=False):
     errors, pending, seen = [], [], set()
     if record.get("format") != "yuntu-release-readiness/1":
         errors.append("Unsupported readiness format")
+    target = record.get("releaseTarget", {})
+    if not all(isinstance(target.get(key), str) and target[key] for key in ("version", "channel", "windowsFileVersion")):
+        errors.append("Missing user-fixed release target")
+    elif record.get("branch") != "release/" + target["version"]:
+        errors.append("Release branch does not match the user-fixed version")
+    if isinstance(record.get("finalIdentity"), dict):
+        errors.extend(identity_mismatches(record["finalIdentity"], target, "Final build identity"))
     for gate in record.get("gates", []):
         identity = gate.get("id")
         if not isinstance(identity, str) or identity in seen:
@@ -60,11 +67,21 @@ def validate_readiness(record, require_ready=False):
     return errors, pending
 
 
-def check(root=ROOT, require_ready=False):
+def identity_mismatches(identity, target, label):
+    return [label + " does not match the user-fixed release " + key
+            for key in ("version", "channel", "windowsFileVersion") if identity.get(key) != target.get(key)]
+
+
+def check(root=ROOT, require_ready=False, editor_identity=None):
     errors = []
     record = json.loads((root / "docs/release/readiness.json").read_text(encoding="utf8"))
     failures, pending = validate_readiness(record, require_ready)
     errors.extend(failures)
+    if editor_identity is not None:
+        source = json.loads(Path(editor_identity).read_text(encoding="utf8"))
+        errors.extend(identity_mismatches(source, record["releaseTarget"], "Editor release configuration"))
+    elif require_ready:
+        errors.append("Final release check requires --editor-identity pointing to the actual editor release configuration")
     for name in record["preparedMaterials"]:
         if not inside(root, name).is_file():
             errors.append("Missing preparation material: " + name)
@@ -111,8 +128,9 @@ def check(root=ROOT, require_ready=False):
             errors.append("Final listing facts are incomplete")
         for asset in record.get("approvedAssets", []):
             name = asset["path"]
-            if not name.startswith("releases/"):
-                errors.append("Final artifact is outside this project's archive: " + name)
+            prefix = "releases/" + record["releaseTarget"]["version"] + "/windows-x64/"
+            if not name.startswith(prefix):
+                errors.append("Final artifact is outside the fixed version archive: " + name)
                 continue
             file = inside(root, name)
             if not file.is_file():
@@ -130,9 +148,10 @@ def check(root=ROOT, require_ready=False):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--require-ready", action="store_true")
+    parser.add_argument("--editor-identity", type=Path, help="Read and compare the actual editor packaging/release.json without changing it")
     args = parser.parse_args()
     try:
-        errors, pending = check(require_ready=args.require_ready)
+        errors, pending = check(require_ready=args.require_ready, editor_identity=args.editor_identity)
     except (OSError, ValueError, KeyError, TypeError) as error:
         print("Preparation check failed: " + str(error), file=sys.stderr)
         return 1

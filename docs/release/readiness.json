@@ -3,15 +3,21 @@
   "product": "Yuntu Editor",
   "updatedOn": "2026-11-08",
   "state": "local-preparation-user-review-required",
-  "branch": "release/1.0.0-beta.3",
+  "branch": "release/1.0.0-beta",
   "localMainBranch": "main",
   "observedRemoteMainBranch": "main",
   "primaryChannel": "microsoft-store-msix",
+  "releaseTarget": {
+    "version": "1.0.0-beta",
+    "channel": "beta",
+    "windowsFileVersion": "1.0.0.0",
+    "fixedByUserOn": "2026-11-08"
+  },
   "observedIdentity": {
     "version": "1.0.0-beta.3",
     "channel": "beta",
     "windowsFileVersion": "1.0.0.3",
-    "status": "not-frozen"
+    "status": "historical-observation-before-user-fixed-release-target"
   },
   "finalIdentity": null,
   "approvedAssets": [],
@@ -30,7 +36,7 @@
   ],
   "gates": [
     {"id": "editor-acceptance", "status": "pending", "reason": "The other acceptance task is still running; no final sign-off has been supplied.", "evidence": null},
-    {"id": "frozen-identity-and-artifacts", "status": "pending", "reason": "Freeze the accepted source, product and build identities, then archive exact final package bytes in this project.", "evidence": null},
+    {"id": "frozen-identity-and-artifacts", "status": "pending", "reason": "Build and verify exactly 1.0.0-beta / beta / 1.0.0.0, then archive the approved original bytes in releases/1.0.0-beta/windows-x64/. Renaming beta.3 artifacts is insufficient.", "evidence": null},
     {"id": "store-account-and-product", "status": "pending", "reason": "Company verification, reserved product name, product and publisher identities have not been confirmed complete.", "evidence": null},
     {"id": "msix-package-and-channel", "status": "pending", "reason": "The existing EXE packaging path is not proof of Store MSIX packaging and installation.", "evidence": null},
     {"id": "requirements-install-and-upgrade", "status": "pending", "reason": "Confirm supported Windows and hardware requirements, clean install, upgrade and uninstall on the final package.", "evidence": null},

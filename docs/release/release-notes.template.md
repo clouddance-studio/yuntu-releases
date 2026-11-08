@@ -1,8 +1,9 @@
-# Yuntu Editor {{version}}
+# Yuntu Editor 1.0.0-beta
 
 **Draft template — not a published release.** Replace every `{{field}}` and verify every retained statement against the accepted package before use.
 
-- Channel: {{channel}}
+- Channel: beta
+- Windows file version: 1.0.0.0
 - Release date: {{release_date}}
 - Platform: Windows x64
 - Confirmed requirements: {{windows_builds_hardware_and_runtimes}}
